@@ -8,7 +8,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/top-icon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/top-icon.png">
-  <link rel="mask-icon" href="/images/top-icon.png" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -17,20 +16,20 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Github SSH方法免密登陆问题描述 :提交hexo d 推到远端git仓库请求的时候 提示:As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on Gi">
+  <meta name="description" content="问题描述:提交hexo d 推到远端git仓库请求的时候 提示:    As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Ins">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github设置ssh免密登陆并配置hexo">
 <meta property="og:url" content="http://example.com/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/index.html">
 <meta property="og:site_name" content="小张成长日记">
-<meta property="og:description" content="Github SSH方法免密登陆问题描述 :提交hexo d 推到远端git仓库请求的时候 提示:As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on Gi">
+<meta property="og:description" content="问题描述:提交hexo d 推到远端git仓库请求的时候 提示:    As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Ins">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-07T07:38:33.000Z">
-<meta property="article:modified_time" content="2022-04-07T07:43:26.481Z">
+<meta property="article:modified_time" content="2022-04-08T08:05:02.629Z">
 <meta property="article:author" content="Adam young">
-<meta property="article:tag" content="hexo, github ,ssh">
+<meta property="article:tag" content="hexo, github ,ssh登录">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/">
@@ -163,10 +162,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
 
 
     <main class="main">
@@ -203,10 +198,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-04-07 15:38:33 / Modified: 15:43:26" itemprop="dateCreated datePublished" datetime="2022-04-07T15:38:33+08:00">2022-04-07</time>
+              <time title="Created: 2022-04-07 15:38:33" itemprop="dateCreated datePublished" datetime="2022-04-07T15:38:33+08:00">2022-04-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-08 16:05:02" itemprop="dateModified" datetime="2022-04-08T16:05:02+08:00">2022-04-08</time>
+              </span>
 
           
 
@@ -219,40 +220,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Github-SSH方法免密登陆"><a href="#Github-SSH方法免密登陆" class="headerlink" title="Github SSH方法免密登陆"></a>Github SSH方法免密登陆</h1><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述 :"></a>问题描述 :</h3><p>提交hexo d 推到远端git仓库请求的时候 提示:<br>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</p>
-<p>大致意思是 :<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
-<ol>
-<li>cd到home目录</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
+        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述:"></a>问题描述:</h3><p>提交hexo d 推到远端git仓库请求的时候 提示:  </p>
+<ul>
+<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
+</ul>
+<span id="more"></span>
 
-<ol start="2">
-<li>删除已经存在的 .ssh 目录(如果有), 查看ssh 生成密钥对</li>
-</ol>
+<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><ol>
+<li><p>cd到home目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除已经存在的 .ssh 目录(如果有), 查看ssh 生成密钥对</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure>
 <p>遇到提示enter就OK</p>
-<ol start="3">
-<li>进入ssh目录</li>
+</li>
+<li><p>进入ssh目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure>
-<h4 id="在此目录下的-id-rsa-就是你的私钥-要保存好-泄露达咩-❌-🙅"><a href="#在此目录下的-id-rsa-就是你的私钥-要保存好-泄露达咩-❌-🙅" class="headerlink" title="在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )"></a>在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</h4><ol start="4">
-<li>查看id_rsa.pub 就是公钥</li>
-</ol>
+<ul>
+<li>在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</li>
+</ul>
+<ol start="4">
+<li><p>查看id_rsa.pub 就是公钥</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure>
 <p>复制下来(所有)</p>
-<ol start="5">
-<li>登录 GitHub，点击用户头像→Settings→SSHandGPG keys</li>
-<li>点击 New SSH Key 复制到Key 文本框中 Title 随便起名</li>
-<li>Add SSH Key 就可以了</li>
+</li>
+<li><p>登录 GitHub，点击用户头像→Settings→SSHandGPG keys</p>
+</li>
+<li><p>点击 New SSH Key 复制到Key 文本框中 Title 随便起名</p>
+</li>
+<li><p>Add SSH Key 就可以了</p>
+</li>
 </ol>
 <hr>
-<p>配置完接下来是 hexo 这边的 配置<br>8. 先验证下是否上面配置成功:</p>
+<ul>
+<li>配置完接下来是 hexo 这边的 配置 (⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️)</li>
+</ul>
+<ol start="8">
+<li><p>先验证下是否上面配置成功:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<p>显示successfully 就OK<br>9. 找到 hexo 博客目录下的  ____config.yml<br>修改以下设置 :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">	<span class="built_in">type</span>: git</span><br><span class="line">	repo: git@github.com:用户名/仓库名.git</span><br><span class="line">	branch: master</span><br></pre></td></tr></table></figure>
+<p>显示successfully 就OK</p>
+</li>
+<li><p>找到 hexo 博客目录下的  ____config.yml<br>修改以下设置 :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master(默认是master 但还是写上吧)</span><br></pre></td></tr></table></figure>
 <p>注意: 用户名是你 github的名字 不是之前的登录Username</p>
-<ol start="10">
-<li>wq保存之后 以后 hexo d 推远端仓库就不需要输入密码了 !</li>
+</li>
+<li><p>wq保存之后 以后 hexo d 推远端仓库就不需要输入密码了 !</p>
+</li>
 </ol>
 
     </div>
@@ -263,7 +278,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/hexo-github-ssh/" rel="tag"># hexo, github ,ssh</a>
+              <a href="/tags/hexo-github-ssh%E7%99%BB%E5%BD%95/" rel="tag"># hexo, github ,ssh登录</a>
           </div>
 
         
@@ -327,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Github-SSH%E6%96%B9%E6%B3%95%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86"><span class="nav-number">1.</span> <span class="nav-text">Github SSH方法免密登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.0.1.</span> <span class="nav-text">问题描述 :</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E6%AD%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84-id-rsa-%E5%B0%B1%E6%98%AF%E4%BD%A0%E7%9A%84%E7%A7%81%E9%92%A5-%E8%A6%81%E4%BF%9D%E5%AD%98%E5%A5%BD-%E6%B3%84%E9%9C%B2%E8%BE%BE%E5%92%A9-%E2%9D%8C-%F0%9F%99%85"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法:</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -351,10 +366,32 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ProcessMonitor" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ProcessMonitor" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/wqzhang@126.com" title="E-Mail → wqzhang@126.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      一些其他链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/qq_36296239?type=blog" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36296239?type&#x3D;blog" rel="noopener" target="_blank">csdn</a>
+        </li>
+    </ul>
+  </div>
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>

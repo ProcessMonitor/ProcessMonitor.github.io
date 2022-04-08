@@ -3,44 +3,58 @@
   <entry>
     <title>Github设置ssh免密登陆并配置hexo</title>
     <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
-    <content><![CDATA[<h1 id="Github-SSH方法免密登陆"><a href="#Github-SSH方法免密登陆" class="headerlink" title="Github SSH方法免密登陆"></a>Github SSH方法免密登陆</h1><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述 :"></a>问题描述 :</h3><p>提交hexo d 推到远端git仓库请求的时候 提示:<br>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</p>
-<p>大致意思是 :<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
-<ol>
-<li>cd到home目录</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述:"></a>问题描述:</h3><p>提交hexo d 推到远端git仓库请求的时候 提示:  </p>
+<ul>
+<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
+</ul>
+<span id="more"></span>
 
-<ol start="2">
-<li>删除已经存在的 .ssh 目录(如果有), 查看ssh 生成密钥对</li>
-</ol>
+<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><ol>
+<li><p>cd到home目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除已经存在的 .ssh 目录(如果有), 查看ssh 生成密钥对</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure>
 <p>遇到提示enter就OK</p>
-<ol start="3">
-<li>进入ssh目录</li>
+</li>
+<li><p>进入ssh目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure>
-<h4 id="在此目录下的-id-rsa-就是你的私钥-要保存好-泄露达咩-❌-🙅"><a href="#在此目录下的-id-rsa-就是你的私钥-要保存好-泄露达咩-❌-🙅" class="headerlink" title="在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )"></a>在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</h4><ol start="4">
-<li>查看id_rsa.pub 就是公钥</li>
-</ol>
+<ul>
+<li>在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</li>
+</ul>
+<ol start="4">
+<li><p>查看id_rsa.pub 就是公钥</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure>
 <p>复制下来(所有)</p>
-<ol start="5">
-<li>登录 GitHub，点击用户头像→Settings→SSHandGPG keys</li>
-<li>点击 New SSH Key 复制到Key 文本框中 Title 随便起名</li>
-<li>Add SSH Key 就可以了</li>
+</li>
+<li><p>登录 GitHub，点击用户头像→Settings→SSHandGPG keys</p>
+</li>
+<li><p>点击 New SSH Key 复制到Key 文本框中 Title 随便起名</p>
+</li>
+<li><p>Add SSH Key 就可以了</p>
+</li>
 </ol>
 <hr>
-<p>配置完接下来是 hexo 这边的 配置<br>8. 先验证下是否上面配置成功:</p>
+<ul>
+<li>配置完接下来是 hexo 这边的 配置 (⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️)</li>
+</ul>
+<ol start="8">
+<li><p>先验证下是否上面配置成功:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<p>显示successfully 就OK<br>9. 找到 hexo 博客目录下的  ____config.yml<br>修改以下设置 :</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">	<span class="built_in">type</span>: git</span><br><span class="line">	repo: git@github.com:用户名/仓库名.git</span><br><span class="line">	branch: master</span><br></pre></td></tr></table></figure>
+<p>显示successfully 就OK</p>
+</li>
+<li><p>找到 hexo 博客目录下的  ____config.yml<br>修改以下设置 :</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master(默认是master 但还是写上吧)</span><br></pre></td></tr></table></figure>
 <p>注意: 用户名是你 github的名字 不是之前的登录Username</p>
-<ol start="10">
-<li>wq保存之后 以后 hexo d 推远端仓库就不需要输入密码了 !</li>
+</li>
+<li><p>wq保存之后 以后 hexo d 推远端仓库就不需要输入密码了 !</p>
+</li>
 </ol>
 ]]></content>
       <tags>
-        <tag>hexo, github ,ssh</tag>
+        <tag>hexo, github ,ssh登录</tag>
       </tags>
   </entry>
 </search>
