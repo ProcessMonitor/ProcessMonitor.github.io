@@ -64,9 +64,9 @@
 <li>Qi L, Song H, Zhang X, et al. Compatibility-aware web api recommendation for mashup creation via textual description mining[J]. ACM Transactions on Multimidia Computing Communications and Applications, 2021, 17(1s): 1-19.</li>
 </ul>
 <h3 id="报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises"><a href="#报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises" class="headerlink" title="报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises"></a>报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises</h3><ul>
-<li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.<span id="more"></span></li>
+<li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.</li>
 </ul>
-]]></content>
+<span id="more"></span>]]></content>
       <tags>
         <tag>服务推荐, 随笔, 思考, mind-sparkle, 推荐系统</tag>
       </tags>
@@ -74,10 +74,14 @@
   <entry>
     <title>go的问题汇总</title>
     <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h3 id="安装后command-not-found"><a href="#安装后command-not-found" class="headerlink" title="安装后command not found"></a>安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<ul>
+<li>Desc: 所有的关于go的问题记录都在这个文章</li>
+</ul>
+<span id="more"></span>
+<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>解决方案:</li>
+<li>问题一解决方案:</li>
 </ul>
 <ol>
 <li>check config file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></li>

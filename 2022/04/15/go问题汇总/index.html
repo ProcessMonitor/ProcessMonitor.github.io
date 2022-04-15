@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="安装安装后command not found12sh-3.2# go -version sh: go: command not found   解决方案:   check config file:1vim ~&#x2F;.bash_profile   如果没有bash_profile就创建   写入:123export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;goexport GOPATH&#x3D;&#x2F;usr&#x2F;local">
+  <meta name="description" content="Desc: 所有的关于go的问题记录都在这个文章">
 <meta property="og:type" content="article">
 <meta property="og:title" content="go的问题汇总">
 <meta property="og:url" content="http://example.com/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/index.html">
 <meta property="og:site_name" content="小张成长日记">
-<meta property="og:description" content="安装安装后command not found12sh-3.2# go -version sh: go: command not found   解决方案:   check config file:1vim ~&#x2F;.bash_profile   如果没有bash_profile就创建   写入:123export GOROOT&#x3D;&#x2F;usr&#x2F;local&#x2F;goexport GOPATH&#x3D;&#x2F;usr&#x2F;local">
+<meta property="og:description" content="Desc: 所有的关于go的问题记录都在这个文章">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-15T07:05:54.000Z">
-<meta property="article:modified_time" content="2022-04-15T07:16:01.550Z">
+<meta property="article:modified_time" content="2022-04-15T07:19:50.139Z">
 <meta property="article:author" content="Adam young">
 <meta property="article:tag" content="go, goland ,Go">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-04-15 15:05:54 / Modified: 15:16:01" itemprop="dateCreated datePublished" datetime="2022-04-15T15:05:54+08:00">2022-04-15</time>
+              <time title="Created: 2022-04-15 15:05:54 / Modified: 15:19:50" itemprop="dateCreated datePublished" datetime="2022-04-15T15:05:54+08:00">2022-04-15</time>
             </span>
 
           
@@ -214,10 +214,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h3 id="安装后command-not-found"><a href="#安装后command-not-found" class="headerlink" title="安装后command not found"></a>安装后command not found</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+        <ul>
+<li>Desc: 所有的关于go的问题记录都在这个文章</li>
+</ul>
+<span id="more"></span>
+<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>解决方案:</li>
+<li>问题一解决方案:</li>
 </ul>
 <ol>
 <li>check config file:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
@@ -310,7 +314,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%90%8Ecommand-not-found"><span class="nav-number">1.0.1.</span> <span class="nav-text">安装后command not found</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">安装部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80-%E5%AE%89%E8%A3%85%E5%90%8Ecommand-not-found"><span class="nav-number">1.0.1.</span> <span class="nav-text">问题一: 安装后command not found</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
