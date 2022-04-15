@@ -71,4 +71,28 @@
         <tag>服务推荐, 随笔, 思考, mind-sparkle, 推荐系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>go的问题汇总</title>
+    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h3 id="安装后command-not-found"><a href="#安装后command-not-found" class="headerlink" title="安装后command not found"></a>安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决方案:</li>
+</ul>
+<ol>
+<li>check config file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>如果没有bash_profile就创建</li>
+</ul>
+<ol start="2">
+<li>写入:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></li>
+<li>保存后:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
+<li>check if it works.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>go, goland ,Go</tag>
+      </tags>
+  </entry>
 </search>
