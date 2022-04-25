@@ -27,7 +27,7 @@
 <meta property="og:description" content="文献标题: Compatibility-Aware Web API Recommendation for MashupCreation via Textual Description Mining Qi L, Song H, Zhang X, et al. Compatibility-aware web api recommendation for mashup creation via text">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-08T08:10:52.000Z">
-<meta property="article:modified_time" content="2022-04-15T07:21:11.684Z">
+<meta property="article:modified_time" content="2022-04-25T12:33:25.290Z">
 <meta property="article:author" content="Adam young">
 <meta property="article:tag" content="服务推荐, 随笔, 思考, mind-sparkle, 推荐系统">
 <meta name="twitter:card" content="summary">
@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">3</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">4</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-15 15:21:11" itemprop="dateModified" datetime="2022-04-15T15:21:11+08:00">2022-04-15</time>
+                <time title="Modified: 2022-04-25 20:33:25" itemprop="dateModified" datetime="2022-04-25T20:33:25+08:00">2022-04-25</time>
               </span>
 
           
@@ -227,6 +227,21 @@
 <li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.</li>
 </ul>
 <span id="more"></span>
+
+<p>初步构思：</p>
+<ol>
+<li>服务和任务的调用关系 (二部图) -&gt; 迭代出相似度矩阵</li>
+</ol>
+<p>任意服务和服务之间的相似度SR(包括不频繁项目的相似度)可以由此计算 :</p>
+<p>FP-growth -&gt; 服务组合中服务的频繁项目<br>(可以是不同服务组合)</p>
+<ul>
+<li>方法 : 不同服务组合中的服务之间的相似度:<br>有如下几种情况:<br>组合A和组合B的服务历史上协作过 且都是频繁项<br>组合A和组合B的服务历史上协作过 部分是频繁项<br>组合A和组合B的服务部分在历史中协作过 协作的过的部分服务是频繁项<br>组合A和组合B的服务部分在历史中协作过 都不是频繁项<br>组合A和组合B的服务都没有在历史中协作过 部分频繁项<br>组合A和组合B的服务都没有在历史中协作过 没有频繁项</li>
+</ul>
+<p>评价算法: 内部频繁项服务的个数 + 相似度 评价服务组合之间的相似度<br>每两个服务组合分别遍历 是频繁项权重就直接 +1 , 不频繁项目取跟组合中频繁项目的最大相似度 (&lt;1) &#x2F; 两个服务组合中的所有服务个数.</p>
+<ol start="2">
+<li>再去结合 MOEA 可以找出高Qos的(在帕累托前沿的) + 高内联协作度服务组合</li>
+</ol>
+
     </div>
 
     
@@ -248,8 +263,8 @@
       <i class="fa fa-chevron-left"></i> Github设置ssh免密登陆并配置hexo
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" rel="next" title="go的问题汇总">
-      go的问题汇总 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" rel="next" title="Golang 汇总">
+      Golang 汇总 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -323,12 +338,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

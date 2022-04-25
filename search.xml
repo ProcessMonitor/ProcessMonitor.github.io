@@ -66,17 +66,30 @@
 <h3 id="报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises"><a href="#报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises" class="headerlink" title="报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises"></a>报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises</h3><ul>
 <li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.</li>
 </ul>
-<span id="more"></span>]]></content>
+<span id="more"></span>
+
+<p>初步构思：</p>
+<ol>
+<li>服务和任务的调用关系 (二部图) -&gt; 迭代出相似度矩阵</li>
+</ol>
+<p>任意服务和服务之间的相似度SR(包括不频繁项目的相似度)可以由此计算 :</p>
+<p>FP-growth -&gt; 服务组合中服务的频繁项目<br>(可以是不同服务组合)</p>
+<ul>
+<li>方法 : 不同服务组合中的服务之间的相似度:<br>有如下几种情况:<br>组合A和组合B的服务历史上协作过 且都是频繁项<br>组合A和组合B的服务历史上协作过 部分是频繁项<br>组合A和组合B的服务部分在历史中协作过 协作的过的部分服务是频繁项<br>组合A和组合B的服务部分在历史中协作过 都不是频繁项<br>组合A和组合B的服务都没有在历史中协作过 部分频繁项<br>组合A和组合B的服务都没有在历史中协作过 没有频繁项</li>
+</ul>
+<p>评价算法: 内部频繁项服务的个数 + 相似度 评价服务组合之间的相似度<br>每两个服务组合分别遍历 是频繁项权重就直接 +1 , 不频繁项目取跟组合中频繁项目的最大相似度 (&lt;1) &#x2F; 两个服务组合中的所有服务个数.</p>
+<ol start="2">
+<li>再去结合 MOEA 可以找出高Qos的(在帕累托前沿的) + 高内联协作度服务组合</li>
+</ol>
+]]></content>
       <tags>
         <tag>服务推荐, 随笔, 思考, mind-sparkle, 推荐系统</tag>
       </tags>
   </entry>
   <entry>
-    <title>go的问题汇总</title>
+    <title>Golang 汇总</title>
     <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<ul>
-<li>Desc: 所有的关于go的问题记录都在这个文章</li>
-</ul>
+    <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
 <span id="more"></span>
 <h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
 
@@ -97,6 +110,23 @@
 ]]></content>
       <tags>
         <tag>go, goland ,Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lambda 表达式</title>
+    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure>
+
+<p>双列集合: 转换成单列集合在创建流(就是套娃)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+      <tags>
+        <tag>java, lambda</tag>
       </tags>
   </entry>
 </search>
