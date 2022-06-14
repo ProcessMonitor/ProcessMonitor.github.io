@@ -103,7 +103,7 @@
 <li>如果没有bash_profile就创建</li>
 </ul>
 <ol start="2">
-<li>写入:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></li>
+<li>写入:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="comment">#GOPATH可以写自己项目的文件地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></li>
 <li>保存后:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
 <li>check if it works.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></li>
 </ol>
@@ -116,7 +116,7 @@
     <title>lambda 表达式</title>
     <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure>
@@ -127,6 +127,17 @@
 <h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
       <tags>
         <tag>java, lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginxConfInDocker</title>
+    <url>/2022/06/14/nginxConfInDocker/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <tags>
+        <tag>nginx, docker</tag>
       </tags>
   </entry>
 </search>
