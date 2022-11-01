@@ -119,7 +119,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -129,7 +129,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">5</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -166,6 +166,174 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="mandarin">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/01/redis%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Adam young">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小张成长日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/01/redis%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">redis相关</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-01 14:41:57 / Modified: 21:57:15" itemprop="dateCreated datePublished" datetime="2022-11-01T14:41:57+08:00">2022-11-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>rediesson（<a target="_blank" rel="noopener" href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95">官方文档</a> ）</li>
+</ul>
+<p>（逃离繁杂的加锁解锁操作，把精力放在业务功能实现上）</p>
+<p>单服务器下sync(this)在本地加对象锁即可。</p>
+<p>分布式情况略复杂</p>
+<ul>
+<li><p>缓存穿透（大量访问不存在的key，缓存好像不存在）</p>
+<p>（1）布隆过滤器</p>
+</li>
+<li><p>缓存雪崩（多个key到期同时失效，db压力大甚至服务器宕机）</p>
+<p>加入随机时间（但实际开发中不需要 因为业务功能实现需要时间 再加随机时间可能弄巧成拙恰好一起到期）</p>
+<ul>
+<li>解决：</li>
+</ul>
+<p>（1）分库分表读写分离</p>
+<p>（2）熔断降级（达到流量阈值打回去 显示系统拥挤等）</p>
+<p>（3）redis集群（弱一致性更常用些）</p>
+</li>
+<li><p>缓存击穿（单个热点key过期时间到）</p>
+<p>（1）热点数据永不失效</p>
+<p>（2）互斥锁</p>
+<p><img src="/Users/zwq/Documents/hexoBlog/source/images/redis%E6%A1%88%E4%BE%8B.png" alt="redis案例"></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="mandarin">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/28/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Adam young">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小张成长日记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/28/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-06-28 16:11:33 / Modified: 21:37:06" itemprop="dateCreated datePublished" datetime="2022-06-28T16:11:33+08:00">2022-06-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="要素"><a href="#要素" class="headerlink" title="要素"></a>要素</h2><ol>
+<li><p>适应值：区分染色体优劣。</p>
+</li>
+<li><p>评估函数evaluation function：计算适应值。</p>
+</li>
+<li><p>选择算子selection ：按照规则进行选择，得到父代种群。</p>
+</li>
+<li><p>交配算子crossover：交换，产生新个体，子代染色体取代父代进入新种群</p>
+</li>
+<li><p>变异算子mutation：使新种群进行小概率变异，染色体发生变异的基因改变数值，得到新染色体。经过变异的新种群代替原有群体进入下一代进化。</p>
+</li>
+</ol>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ol>
+<li>编码</li>
+<li>初始化种群</li>
+<li>适应值评价</li>
+<li>选择种群</li>
+<li>种群交配</li>
+<li>种群变异</li>
+</ol>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><p>编码方式影响交配crossover和变异 mutation操作</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -304,7 +472,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="mandarin">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -318,7 +486,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">Golang 汇总</a>
+            <a href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/" class="post-title-link" itemprop="url">Golang 汇总</a>
         </h2>
 
         <div class="post-meta">
@@ -335,7 +503,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-01 10:45:40" itemprop="dateModified" datetime="2022-05-01T10:45:40+08:00">2022-05-01</time>
+                <time title="Modified: 2022-06-26 16:35:02" itemprop="dateModified" datetime="2022-06-26T16:35:02+08:00">2022-06-26</time>
               </span>
 
           
@@ -352,7 +520,7 @@
           <p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/#more" rel="contents">
+              <a class="btn" href="/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -590,12 +758,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

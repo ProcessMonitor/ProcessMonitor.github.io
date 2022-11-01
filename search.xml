@@ -87,32 +87,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Golang 汇总</title>
-    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
-<span id="more"></span>
-<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>问题一解决方案:</li>
-</ul>
-<ol>
-<li>check config file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>如果没有bash_profile就创建</li>
-</ul>
-<ol start="2">
-<li>写入:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="comment">#GOPATH可以写自己项目的文件地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></li>
-<li>保存后:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
-<li>check if it works.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>go, goland ,Go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>lambda 表达式</title>
     <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
@@ -138,6 +112,127 @@
 ]]></content>
       <tags>
         <tag>nginx, docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang 汇总</title>
+    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/</url>
+    <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
+<span id="more"></span>
+<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>问题一解决方案:</li>
+</ul>
+<ol>
+<li>check config file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>如果没有bash_profile就创建</li>
+</ul>
+<ol start="2">
+<li>写入:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="comment">#GOPATH可以写自己项目的文件地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></li>
+<li>保存后:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></li>
+<li>check if it works.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="学习部分"><a href="#学习部分" class="headerlink" title="学习部分"></a>学习部分</h1><h2 id="const关键字-amp-amp-iota表达式"><a href="#const关键字-amp-amp-iota表达式" class="headerlink" title="const关键字&amp;&amp; iota表达式"></a>const关键字&amp;&amp; iota表达式</h2><ul>
+<li>go 变量声明 ：关键字  + 变量名 +  变量类型</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//iota是一个 表达式</span></span><br><span class="line">  BEIJING = <span class="number">10</span> * <span class="literal">iota</span> <span class="comment">//iota = 0</span></span><br><span class="line">  SHNAGHAI, <span class="comment">// iota == 1</span></span><br><span class="line">  SHENZHEN, <span class="comment">// iota == 2</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//批量赋值</span></span><br><span class="line">	a,b = <span class="literal">iota</span> + <span class="number">1</span> , <span class="literal">iota</span> + <span class="number">2</span> <span class="comment">// iota = 0 </span></span><br><span class="line">  c,d <span class="comment">// iota = 1</span></span><br><span class="line">  e,f</span><br><span class="line">  </span><br><span class="line">  g,h = <span class="literal">iota</span> * <span class="number">2</span> , <span class="literal">iota</span> * <span class="number">3</span></span><br><span class="line">  i,k</span><br><span class="line">  l,m</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">const</span> length <span class="type">int</span> = <span class="number">123</span> </span><br><span class="line">  fmt.Println(<span class="string">&quot;beijing = &quot;</span>, BEIJING)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shanghai = &quot;</span>, SHANGHAI)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shenzhen = &quot;</span>, SHENZHEN)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;ab cd ef = &quot;</span>, a, b, c, d, e, f)</span><br><span class="line">	fmt.Println(<span class="string">&quot;gh ik lm = &quot;</span>, g, h, i, k, l, m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">beijing =  0</span><br><span class="line">shanghai =  10</span><br><span class="line">shenzhen =  20</span><br><span class="line">ab <span class="built_in">cd</span> ef =  1 2 2 3 3 4</span><br><span class="line">gh ik lm =  6 9 8 12 10 15</span><br></pre></td></tr></table></figure>
+
+<h2 id="GO方法声明和返回值"><a href="#GO方法声明和返回值" class="headerlink" title="GO方法声明和返回值"></a>GO方法声明和返回值</h2><ul>
+<li>关键字 + 方法名 +  返回值类型</li>
+</ul>
+<p>eg  : func   test(args .. )   int </p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;a &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b &quot;</span>, b)</span><br><span class="line">	c := <span class="number">11</span></span><br><span class="line">	<span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 匿名形参</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test1</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (<span class="type">int</span>, <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">22</span>, <span class="number">33</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 有形参名称</span></span><br><span class="line"><span class="comment">//或者可以写 func test2(a string, b int) (r1 , r2 int)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (r1 <span class="type">int</span>, r2 <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r1 = &quot;</span>, r1)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r2 = &quot;</span>, r2)</span><br><span class="line">	<span class="comment">// 返回值赋值</span></span><br><span class="line">	r1 = <span class="number">44</span></span><br><span class="line">	r2 = <span class="number">55</span></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := test(<span class="string">&quot;123&quot;</span>, <span class="number">512</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;c= &quot;</span>, c)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 := test1(<span class="string">&quot;test1&quot;</span>, <span class="number">1024</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 , ret2 :&quot;</span>, ret1, ret2)</span><br><span class="line"></span><br><span class="line">	ret3, ret4 := test2(<span class="string">&quot;test2&quot;</span>, <span class="number">2048</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret3 , ret4 :&quot;</span>, ret3, ret4)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">a  123</span><br><span class="line">b  512</span><br><span class="line">c=  11</span><br><span class="line">method name = test1</span><br><span class="line">arg int = 1024</span><br><span class="line">ret1 , ret2 : 22 33</span><br><span class="line">method name = test2</span><br><span class="line">arg int = 2048</span><br><span class="line">r1 =  0</span><br><span class="line">r2 =  0</span><br><span class="line">ret3 , ret4 : 44 55</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="go指针"><a href="#go指针" class="headerlink" title="go指针"></a>go指针</h2><p>demo：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	tmp *<span class="type">int</span> </span><br><span class="line">  q *<span class="type">int</span></span><br><span class="line">  p *<span class="type">int</span></span><br><span class="line">) <span class="comment">//batch 声明</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> a <span class="type">int</span> = <span class="number">10</span></span><br><span class="line">	<span class="keyword">var</span> b <span class="type">int</span> = <span class="number">20</span></span><br><span class="line">	<span class="comment">//指针赋值</span></span><br><span class="line">	p = &amp;a</span><br><span class="line">	q = &amp;b</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//简单指针操作：交换</span></span><br><span class="line">	tmp = p</span><br><span class="line">	p = q</span><br><span class="line">	q = tmp</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//二级指针</span></span><br><span class="line">  <span class="keyword">var</span> (</span><br><span class="line">    dd **<span class="type">int</span></span><br><span class="line">  )</span><br><span class="line">	<span class="keyword">var</span> qq *<span class="type">int</span></span><br><span class="line">	qq = &amp;a</span><br><span class="line">	dd = &amp;qq</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;qq:&quot;</span>, *qq)</span><br><span class="line">	fmt.Println(<span class="string">&quot;dd:&quot;</span>, **dd)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">p , q 10 20</span><br><span class="line">p , q 20 10</span><br><span class="line">qq: 10</span><br><span class="line"><span class="built_in">dd</span>: 10</span><br></pre></td></tr></table></figure>
+
+<h2 id="defer-关键字"><a href="#defer-关键字" class="headerlink" title="defer 关键字"></a>defer 关键字</h2><ul>
+<li>return和defer 的优先级 demo：</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f1&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f3&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Who_Is_First_Test</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> defer_call()</span><br><span class="line">  <span class="keyword">return</span> return_call()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">defer_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">return_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">mian</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end1&quot;</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end2)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	defer f1()</span></span><br><span class="line"><span class="string">	defer f2()</span></span><br><span class="line"><span class="string">	defer f3()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output1 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output2 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>whos is first ?<span class="string">&quot; , Who_Is_First_Test())</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main body output1 </span><br><span class="line">main body output2 </span><br><span class="line">return func call</span><br><span class="line">defer func call</span><br><span class="line">Who is first? 1</span><br><span class="line">f3</span><br><span class="line">f2</span><br><span class="line">f1</span><br><span class="line">main end2</span><br><span class="line">main end1</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>go, goland ,Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2022/06/28/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="要素"><a href="#要素" class="headerlink" title="要素"></a>要素</h2><ol>
+<li><p>适应值：区分染色体优劣。</p>
+</li>
+<li><p>评估函数evaluation function：计算适应值。</p>
+</li>
+<li><p>选择算子selection ：按照规则进行选择，得到父代种群。</p>
+</li>
+<li><p>交配算子crossover：交换，产生新个体，子代染色体取代父代进入新种群</p>
+</li>
+<li><p>变异算子mutation：使新种群进行小概率变异，染色体发生变异的基因改变数值，得到新染色体。经过变异的新种群代替原有群体进入下一代进化。</p>
+</li>
+</ol>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ol>
+<li>编码</li>
+<li>初始化种群</li>
+<li>适应值评价</li>
+<li>选择种群</li>
+<li>种群交配</li>
+<li>种群变异</li>
+</ol>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><p>编码方式影响交配crossover和变异 mutation操作</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>redis相关</title>
+    <url>/2022/11/01/redis%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<ul>
+<li>rediesson（<a href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95">官方文档</a> ）</li>
+</ul>
+<p>（逃离繁杂的加锁解锁操作，把精力放在业务功能实现上）</p>
+<p>单服务器下sync(this)在本地加对象锁即可。</p>
+<p>分布式情况略复杂</p>
+<ul>
+<li><p>缓存穿透（大量访问不存在的key，缓存好像不存在）</p>
+<p>（1）布隆过滤器</p>
+</li>
+<li><p>缓存雪崩（多个key到期同时失效，db压力大甚至服务器宕机）</p>
+<p>加入随机时间（但实际开发中不需要 因为业务功能实现需要时间 再加随机时间可能弄巧成拙恰好一起到期）</p>
+<ul>
+<li>解决：</li>
+</ul>
+<p>（1）分库分表读写分离</p>
+<p>（2）熔断降级（达到流量阈值打回去 显示系统拥挤等）</p>
+<p>（3）redis集群（弱一致性更常用些）</p>
+</li>
+<li><p>缓存击穿（单个热点key过期时间到）</p>
+<p>（1）热点数据永不失效</p>
+<p>（2）互斥锁</p>
+<p><img src="/Users/zwq/Documents/hexoBlog/source/images/redis%E6%A1%88%E4%BE%8B.png" alt="redis案例"></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>redis, distributed lock</tag>
       </tags>
   </entry>
 </search>
