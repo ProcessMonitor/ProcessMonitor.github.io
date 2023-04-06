@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Github设置ssh免密登陆并配置hexo</title>
+    <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
+    <content><![CDATA[<p>仍然是一些shh配置</p>
+<span id="more"></span>
+
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述:"></a>问题描述:</h3><p>今日写文档hexo d的时候时候 提示:  </p>
+<ul>
+<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
+</ul>
+<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><ol>
+<li><p>cd到home目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>删除已经存在的 .ssh 目录(如果有), 查看ssh 生成密钥对</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure></div>
+<p>遇到提示enter就OK</p>
+</li>
+<li><p>进入ssh目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<ul>
+<li>在此目录下的 id_rsa 就是你的私钥(要保存好 泄露达咩 ❌ 🙅 )</li>
+</ul>
+<ol start="4">
+<li><p>查看id_rsa.pub 就是公钥</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure></div>
+<p>复制下来(所有)</p>
+</li>
+<li><p>登录 GitHub，点击用户头像→Settings→SSHandGPG keys</p>
+</li>
+<li><p>点击 New SSH Key 复制到Key 文本框中 Title 随便起名</p>
+</li>
+<li><p>Add SSH Key 就可以了</p>
+</li>
+</ol>
+<hr>
+<ul>
+<li>配置完接下来是 hexo 这边的 配置 (⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️)</li>
+</ul>
+<ol start="8">
+<li><p>先验证下是否上面配置成功:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
+<p>显示successfully 就OK</p>
+</li>
+<li><p>找到 hexo 博客目录下的  ____config.yml<br>修改以下设置 :</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master(默认是master 但还是写上吧)</span><br></pre></td></tr></table></figure></div>
+<p>注意: 用户名是你 github的名字 不是之前的登录Username</p>
+</li>
+<li><p>:wq保存之后 以后 hexo d 推远端仓库就不需要输入密码了 !</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>hexo, github ,ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lambda 表达式合集</title>
+    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<p>来自java8的“新”特性…</p>
+<span id="more"></span>
+<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<!-- more -->
+<p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure></div>
+
+<p>双列集合: 转换成单列集合在创建流(就是套娃)</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+      <tags>
+        <tag>java, lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang 汇总</title>
+    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/</url>
+    <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
+<span id="more"></span>
+<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>问题一解决方案:</li>
+</ul>
+<ol>
+<li>check config file:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<ul>
+<li>如果没有bash_profile就创建</li>
+</ul>
+<ol start="2">
+<li>写入:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="comment">#GOPATH可以写自己项目的文件地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></div></li>
+<li>保存后:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></div></li>
+<li>check if it works.<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h1 id="学习部分"><a href="#学习部分" class="headerlink" title="学习部分"></a>学习部分</h1><h2 id="const关键字-amp-amp-iota表达式"><a href="#const关键字-amp-amp-iota表达式" class="headerlink" title="const关键字&amp;&amp; iota表达式"></a>const关键字&amp;&amp; iota表达式</h2><ul>
+<li>go 变量声明 ：关键字  + 变量名 +  变量类型</li>
+</ul>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//iota是一个 表达式</span></span><br><span class="line">  BEIJING = <span class="number">10</span> * <span class="literal">iota</span> <span class="comment">//iota = 0</span></span><br><span class="line">  SHNAGHAI, <span class="comment">// iota == 1</span></span><br><span class="line">  SHENZHEN, <span class="comment">// iota == 2</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//批量赋值</span></span><br><span class="line">	a,b = <span class="literal">iota</span> + <span class="number">1</span> , <span class="literal">iota</span> + <span class="number">2</span> <span class="comment">// iota = 0 </span></span><br><span class="line">  c,d <span class="comment">// iota = 1</span></span><br><span class="line">  e,f</span><br><span class="line">  </span><br><span class="line">  g,h = <span class="literal">iota</span> * <span class="number">2</span> , <span class="literal">iota</span> * <span class="number">3</span></span><br><span class="line">  i,k</span><br><span class="line">  l,m</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">const</span> length <span class="type">int</span> = <span class="number">123</span> </span><br><span class="line">  fmt.Println(<span class="string">&quot;beijing = &quot;</span>, BEIJING)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shanghai = &quot;</span>, SHANGHAI)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shenzhen = &quot;</span>, SHENZHEN)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;ab cd ef = &quot;</span>, a, b, c, d, e, f)</span><br><span class="line">	fmt.Println(<span class="string">&quot;gh ik lm = &quot;</span>, g, h, i, k, l, m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">beijing =  0</span><br><span class="line">shanghai =  10</span><br><span class="line">shenzhen =  20</span><br><span class="line">ab <span class="built_in">cd</span> ef =  1 2 2 3 3 4</span><br><span class="line">gh ik lm =  6 9 8 12 10 15</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="GO方法声明和返回值"><a href="#GO方法声明和返回值" class="headerlink" title="GO方法声明和返回值"></a>GO方法声明和返回值</h2><ul>
+<li>关键字 + 方法名 +  返回值类型</li>
+</ul>
+<p>eg  : func   test(args .. )   int </p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;a &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b &quot;</span>, b)</span><br><span class="line">	c := <span class="number">11</span></span><br><span class="line">	<span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 匿名形参</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test1</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (<span class="type">int</span>, <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">22</span>, <span class="number">33</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 有形参名称</span></span><br><span class="line"><span class="comment">//或者可以写 func test2(a string, b int) (r1 , r2 int)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (r1 <span class="type">int</span>, r2 <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r1 = &quot;</span>, r1)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r2 = &quot;</span>, r2)</span><br><span class="line">	<span class="comment">// 返回值赋值</span></span><br><span class="line">	r1 = <span class="number">44</span></span><br><span class="line">	r2 = <span class="number">55</span></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := test(<span class="string">&quot;123&quot;</span>, <span class="number">512</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;c= &quot;</span>, c)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 := test1(<span class="string">&quot;test1&quot;</span>, <span class="number">1024</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 , ret2 :&quot;</span>, ret1, ret2)</span><br><span class="line"></span><br><span class="line">	ret3, ret4 := test2(<span class="string">&quot;test2&quot;</span>, <span class="number">2048</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret3 , ret4 :&quot;</span>, ret3, ret4)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">a  123</span><br><span class="line">b  512</span><br><span class="line">c=  11</span><br><span class="line">method name = test1</span><br><span class="line">arg int = 1024</span><br><span class="line">ret1 , ret2 : 22 33</span><br><span class="line">method name = test2</span><br><span class="line">arg int = 2048</span><br><span class="line">r1 =  0</span><br><span class="line">r2 =  0</span><br><span class="line">ret3 , ret4 : 44 55</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="go指针"><a href="#go指针" class="headerlink" title="go指针"></a>go指针</h2><p>demo：</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	tmp *<span class="type">int</span> </span><br><span class="line">  q *<span class="type">int</span></span><br><span class="line">  p *<span class="type">int</span></span><br><span class="line">) <span class="comment">//batch 声明</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> a <span class="type">int</span> = <span class="number">10</span></span><br><span class="line">	<span class="keyword">var</span> b <span class="type">int</span> = <span class="number">20</span></span><br><span class="line">	<span class="comment">//指针赋值</span></span><br><span class="line">	p = &amp;a</span><br><span class="line">	q = &amp;b</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//简单指针操作：交换</span></span><br><span class="line">	tmp = p</span><br><span class="line">	p = q</span><br><span class="line">	q = tmp</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//二级指针</span></span><br><span class="line">  <span class="keyword">var</span> (</span><br><span class="line">    dd **<span class="type">int</span></span><br><span class="line">  )</span><br><span class="line">	<span class="keyword">var</span> qq *<span class="type">int</span></span><br><span class="line">	qq = &amp;a</span><br><span class="line">	dd = &amp;qq</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;qq:&quot;</span>, *qq)</span><br><span class="line">	fmt.Println(<span class="string">&quot;dd:&quot;</span>, **dd)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>输出：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">p , q 10 20</span><br><span class="line">p , q 20 10</span><br><span class="line">qq: 10</span><br><span class="line"><span class="built_in">dd</span>: 10</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="defer-关键字"><a href="#defer-关键字" class="headerlink" title="defer 关键字"></a>defer 关键字</h2><ul>
+<li>return和defer 的优先级 demo：</li>
+</ul>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f1&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f3&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Who_Is_First_Test</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> defer_call()</span><br><span class="line">  <span class="keyword">return</span> return_call()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">defer_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">return_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">mian</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end1&quot;</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end2)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	defer f1()</span></span><br><span class="line"><span class="string">	defer f2()</span></span><br><span class="line"><span class="string">	defer f3()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output1 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output2 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>whos is first ?<span class="string">&quot; , Who_Is_First_Test())</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">main body output1 </span><br><span class="line">main body output2 </span><br><span class="line">return func call</span><br><span class="line">defer func call</span><br><span class="line">Who is first? 1</span><br><span class="line">f3</span><br><span class="line">f2</span><br><span class="line">f1</span><br><span class="line">main end2</span><br><span class="line">main end1</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <tags>
+        <tag>go, goland ,Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginxConfInDocker</title>
+    <url>/2022/06/14/nginxConfInDocker/</url>
+    <content><![CDATA[<p>一些配置的备份罢了</p>
+<span id="more"></span>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure></div>
+<!-- end -->]]></content>
+      <tags>
+        <tag>nginx, docker, backup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis相关</title>
+    <url>/2022/11/01/redis%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<ul>
+<li>rediesson（<a class="link"   href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95" >官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）<span id="more"></span></li>
+</ul>
+<p>（逃离繁杂的加锁解锁操作，把精力放在业务功能实现上）</p>
+<p>单服务器下sync(this)在本地加对象锁即可。</p>
+<p>分布式情况略复杂</p>
+<ul>
+<li><p>缓存穿透（大量访问不存在的key，缓存好像不存在）</p>
+<p>（1）布隆过滤器</p>
+</li>
+<li><p>缓存雪崩（多个key到期同时失效，db压力大甚至服务器宕机）</p>
+<p>加入随机时间（但实际开发中不需要 因为业务功能实现需要时间 再加随机时间可能弄巧成拙恰好一起到期）</p>
+<ul>
+<li>解决：</li>
+</ul>
+<p>（1）分库分表读写分离</p>
+<p>（2）熔断降级（达到流量阈值打回去 显示系统拥挤等）</p>
+<p>（3）redis集群（弱一致性更常用些）</p>
+</li>
+<li><p>缓存击穿（单个热点key过期时间到）</p>
+<p>（1）热点数据永不失效</p>
+<p>（2）互斥锁</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/Users/zwq/Documents/hexoBlog/source/images/redis%E6%A1%88%E4%BE%8B.png"
+                      alt="redis案例"
+                ></p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <tags>
+        <tag>redis, distributed lock</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>服务推荐</title>
+    <url>/2022/04/08/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3%E7%9A%84idea%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>没x用的学术垃圾产出</p>
+<span id="more"></span>
+<h3 id="文献标题-Compatibility-Aware-Web-API-Recommendation-for-MashupCreation-via-Textual-Description-Mining"><a href="#文献标题-Compatibility-Aware-Web-API-Recommendation-for-MashupCreation-via-Textual-Description-Mining" class="headerlink" title="文献标题: Compatibility-Aware Web API Recommendation for MashupCreation via Textual Description Mining"></a>文献标题: Compatibility-Aware Web API Recommendation for MashupCreation via Textual Description Mining</h3><ul>
+<li>Qi L, Song H, Zhang X, et al. Compatibility-aware web api recommendation for mashup creation via textual description mining[J]. ACM Transactions on Multimidia Computing Communications and Applications, 2021, 17(1s): 1-19.</li>
+</ul>
+<h3 id="报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises"><a href="#报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises" class="headerlink" title="报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises"></a>报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises</h3><ul>
+<li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.</li>
+</ul>
+<!-- more -->
+
+<p>初步构思：</p>
+<ol>
+<li>   服务和任务的调用关系 (二部图) -&gt; 迭代出相似度矩阵</li>
+</ol>
+<p>任意服务和服务之间的相似度SR(包括不频繁项目的相似度)可以由此计算 :</p>
+<p>FP-growth -&gt; 服务组合中服务的频繁项目<br>(可以是不同服务组合)</p>
+<ul>
+<li>方法 : 不同服务组合中的服务之间的相似度:<br>有如下几种情况:<br>组合A和组合B的服务历史上协作过 且都是频繁项<br>组合A和组合B的服务历史上协作过 部分是频繁项<br>组合A和组合B的服务部分在历史中协作过 协作的过的部分服务是频繁项<br>组合A和组合B的服务部分在历史中协作过 都不是频繁项<br>组合A和组合B的服务都没有在历史中协作过 部分频繁项<br>组合A和组合B的服务都没有在历史中协作过 没有频繁项</li>
+</ul>
+<p>评价算法: 内部频繁项服务的个数 + 相似度 评价服务组合之间的相似度<br>每两个服务组合分别遍历 是频繁项权重就直接 +1 , 不频繁项目取跟组合中频繁项目的最大相似度 (&lt;1) &#x2F; 两个服务组合中的所有服务个数.</p>
+<ol start="2">
+<li>   再去结合 MOEA 可以找出高Qos的(在帕累托前沿的) + 高内联协作度服务组合</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>服务推荐, 随笔, 推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>遗传算法</title>
+    <url>/2022/06/08/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>paper上的算法…</p>
+<span id="more"></span>
+<h5 id="要素："><a href="#要素：" class="headerlink" title="要素："></a>要素：</h5><ol>
+<li><p>适应值：区分染色体优劣。</p>
+</li>
+<li><p>评估函数evaluation function：计算适应值。</p>
+</li>
+<li><p>选择算子selection ：按照规则进行选择，得到父代种群。</p>
+</li>
+<li><p>交配算子crossover：交换，产生新个体，子代染色体取代父代进入新种群</p>
+</li>
+<li><p>变异算子mutation：使新种群进行小概率变异，染色体发生变异的基因改变数值，得到新染色体。经过变异的新种群代替原有群体进入下一代进化。</p>
+</li>
+</ol>
+<h5 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h5><ol>
+<li>编码</li>
+<li>初始化种群</li>
+<li>适应值评价</li>
+<li>选择种群</li>
+<li>种群交配</li>
+<li>种群变异</li>
+</ol>
+<h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><p>编码方式影响交配crossover和变异 mutation操作等。</p>
+]]></content>
+      <tags>
+        <tag>服务推荐, 遗传算法, 推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于ElasticSearch的运行Bug</title>
+    <url>/2022/11/29/ElasticSearch/</url>
+    <content><![CDATA[<p>info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
+<span id="more"></span>
+<p> <code>原因:</code></p>
+<ul>
+<li>文件描述符fd太少:</li>
+</ul>
+<p>切换到root用户 查看硬限制</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div>
+
+<p>在limits配置文件中添加下面设置:</p>
+<p><em>(adam是本地用户,替换你自己的)</em></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
+
+<p>退出用户重新登录，使配置生效</p>
+<p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
+
+<p>找到文件中的如下内容:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
+
+<p>修改为</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
+<p>接下来在:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure></div>
+
+<p>添加下面配置:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
+
+<p>并执行:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div>
+
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> (official guide doc)中这么写的:</p>
+<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
+<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
+<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
+]]></content>
+      <tags>
+        <tag>ElasticSearch, ES, bug, 分布式</tag>
+      </tags>
+  </entry>
+</search>
