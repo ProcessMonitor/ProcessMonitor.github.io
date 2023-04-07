@@ -348,7 +348,10 @@
 <p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
 
 <div class="note note-danger icon-padding"><i class="note-icon fa-solid fa-times-circle"></i><p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
-</div>]]></content>
+</div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78627140' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>
+]]></content>
       <categories>
         <category>tomcat</category>
         <category>bug</category>
@@ -384,7 +387,9 @@
 <p>所以jsp文件没法找到servlet生成的class文件。</p>
 <div class="note-large notel-red"><div class="notel-title"><p>解决办法:</p>
 </div><div class="notel-content"><p>解决方案就是在build path里面重新设置class的输出文件夹，放到web-inf文件夹下面的classes中,如果没有这个classes文件夹,则要自己新建一个。</p>
- </div></div>]]></content>
+ </div></div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78615827' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>]]></content>
       <categories>
         <category>servlet</category>
         <category>bug</category>
