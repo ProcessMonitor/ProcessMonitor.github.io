@@ -27,9 +27,9 @@
 <meta property="og:description" content="info: 123456[1].max file descriptors [4096] for elasticsearch     process is too low, increase to at least [65536][2].max number of threads [1889] for user    [adam] is too low, increase to at least [">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-29T08:10:52.000Z">
-<meta property="article:modified_time" content="2023-04-06T17:02:05.541Z">
+<meta property="article:modified_time" content="2023-04-07T07:01:34.909Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="ElasticSearch, ES, bug, 分布式">
+<meta property="article:tag" content="ElasticSearch - ES - bug - 分布式">
 <meta name="twitter:card" content="summary">
     
     <!--- Icon Part-->
@@ -43,7 +43,7 @@
         
             关于ElasticSearch的运行Bug -
         
-        Code Foot Print
+        FootPrint
     </title>
     
 <link rel="stylesheet" href="/css/style.css">
@@ -62,7 +62,7 @@
     <script id="hexo-configurations">
     let Global = window.Global || {};
     Global.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
-    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["","L1","L2","L3","L4","L5","L6"]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":"ture","title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Code 2 Everthing","subtitle":{"text":["Swipe to see more\n :)","May help u somethin in here \n..."],"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/ProcessMonitor","instagram":null,"zhihu":null,"twitter":null,"email":"getPerfectJob@yeah.net"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"audios":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Status":{"path":"https://status.evanluo.top/","icon":"fa-regular fa-chart-bar"},"GitHub":{"path":"http://github.com/ProcessMonitor","icon":"fa-brands fa-github"},"Links":{"icon":"fa-regular fa-link","submenus":{"Me":"/about","Github":"https://github.com/ProcessMonitor"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["","L1","L2","L3","L4","L5","L6"]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":"ture","title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Code 2 Everthing","subtitle":{"text":["Swipe to see more\n :)","May help u somethin in here \n..."],"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/ProcessMonitor","instagram":null,"zhihu":null,"twitter":null,"email":"getPerfectJob@yeah.net"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"audios":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Status":{"path":"https://status.evanluo.top/","icon":"fa-regular fa-chart-bar"},"GitHub":{"path":"http://github.com/ProcessMonitor","icon":"fa-brands fa-github"},"Links":{"icon":"fa-regular fa-link","submenus":{"Tags":"/tags","Categories":"/categories","Me":"/about","Github":"https://github.com/ProcessMonitor"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
     Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
     
@@ -113,7 +113,7 @@
             
             <a class="logo-title" href="/">
                 
-                Code Foot Print
+                FootPrint
                 
             </a>
         </div>
@@ -202,6 +202,16 @@
                                 <!-- Submenu -->
                                 
                                     <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a href="/tags">TAGS
+                                        </a>
+                                        </li>
+                                    
+                                        <li>
+                                        <a href="/categories">CATEGORIES
+                                        </a>
+                                        </li>
                                     
                                         <li>
                                         <a href="/about">ME
@@ -316,6 +326,14 @@
                               
                         
                             <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" href="/tags">TAGS</a>
+                            </li>
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" href="/categories">CATEGORIES</a>
+                            </li>
+                        
+                            <li class="dropdown-item flex-center">
                                 <a class="dropdown-item" href="/about">ME</a>
                             </li>
                         
@@ -379,12 +397,23 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-07 01:02:05</span>
-            <span class="mobile">2023-04-07 01:02</span>
+            <span class="desktop">2023-04-07 15:01:34</span>
+            <span class="mobile">2023-04-07 15:01</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/ElasticSearch-bug/">ElasticSearch - bug</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
     
         <span class="article-tags article-meta-item">
@@ -392,7 +421,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/ElasticSearch-ES-bug-%E5%88%86%E5%B8%83%E5%BC%8F/">ElasticSearch, ES, bug, 分布式</a>&nbsp;
+                        <a href="/tags/ElasticSearch-ES-bug-%E5%88%86%E5%B8%83%E5%BC%8F/">ElasticSearch - ES - bug - 分布式</a>&nbsp;
                     </li>
                 
             </ul>
@@ -468,7 +497,7 @@
         <li><strong>Created at:</strong> 2022-11-29 16:10:52</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-04-07 01:02:05
+                <strong>Updated at:</strong> 2023-04-07 15:01:34
             </li>
         
         <li>
@@ -487,7 +516,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/ElasticSearch-ES-bug-%E5%88%86%E5%B8%83%E5%BC%8F/">#ElasticSearch, ES, bug, 分布式</a>&nbsp;
+                            <a href="/tags/ElasticSearch-ES-bug-%E5%88%86%E5%B8%83%E5%BC%8F/">#ElasticSearch - ES - bug - 分布式</a>&nbsp;
                         </li>
                     
                 </ul>

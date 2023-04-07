@@ -41,8 +41,11 @@
 <p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
 <p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
 ]]></content>
+      <categories>
+        <category>ElasticSearch - bug</category>
+      </categories>
       <tags>
-        <tag>ElasticSearch, ES, bug, 分布式</tag>
+        <tag>ElasticSearch - ES - bug - 分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -51,10 +54,13 @@
     <content><![CDATA[<p>仍然是一些shh配置</p>
 <span id="more"></span>
 
-<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述:"></a>问题描述:</h3><p>今日写文档hexo d的时候时候 提示:  </p>
-<ul>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述:"></a>问题描述:</h3><div class="note-large notel-blue"><div class="notel-title"><p>今日hexo</p>
+</div><div class="notel-content"><ul>
 <li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
 </ul>
+ </div></div>
+
+
 <p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><ol>
 <li><p>cd到home目录</p>
@@ -261,8 +267,11 @@
 <li>   再去结合 MOEA 可以找出高Qos的(在帕累托前沿的) + 高内联协作度服务组合</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>学术垃圾 - 服务推荐</category>
+      </categories>
       <tags>
-        <tag>服务推荐, 随笔, 推荐系统</tag>
+        <tag>服务推荐 - 随笔 - 推荐系统</tag>
       </tags>
   </entry>
   <entry>
@@ -293,7 +302,7 @@
 <h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><p>编码方式影响交配crossover和变异 mutation操作等。</p>
 ]]></content>
       <tags>
-        <tag>服务推荐, 遗传算法, 推荐系统</tag>
+        <tag>服务推荐 - 遗传算法 - 推荐系统</tag>
       </tags>
   </entry>
 </search>
