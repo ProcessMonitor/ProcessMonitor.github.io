@@ -328,4 +328,69 @@
     <content><![CDATA[<p>置顶文章来了我的老babe们。</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Tomcat Server</title>
+    <url>/2017/11/01/Tomcat-Server/</url>
+    <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
+<p>tomcat报错:</p>
+<div class="note note-bug description :"><p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+</div>
+
+<p>打开<code>https://localhost:8080</code>依旧如此</p>
+<p>解决办法:</p>
+<div class="tabs" id="tab-solution"><ul class="nav-tabs"><li class="tab active"><a class="#solution-1">step.1</a></li><li class="tab"><a class="#solution-2">step.2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="solution-1"><ul>
+<li>将服务器从eclipse的配置中删掉,重新添加新的服务器 双击. </li>
+<li>server locations 可选,勾选中间一个.</li>
+</ul>
+<p><strong>如果错误依旧存在 点第二步</strong></p></div><div class="tab-pane" id="solution-2"><p>若把jsp 文件 放到 WebContent 下面的文件夹里面 。</p>
+<p>你的访问路径应该为: <code>localhost:8080/你的项目名称/你的放jsp的文件夹/jsp文件名称.jsp</code></p>
+<p>例子: localhost:8080&#x2F;JSTLTest&#x2F;jsp&#x2F;JSTLTest.jsp</p>
+<p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
+
+<div class="note note-danger icon-padding"><i class="note-icon fa-solid fa-times-circle"></i><p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
+</div>]]></content>
+      <categories>
+        <category>tomcat</category>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Route Bug</title>
+    <url>/2017/11/23/Route-Bug/</url>
+    <content><![CDATA[<p>跟上篇文章一样也是很多java web新手都遇到的错误:<br><code>jsp跳转到Servlet 出现404路径错误:</code></p>
+<!-- <div class="note note-bug description :"><p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+</div> -->
+
+<ul>
+<li>检查:</li>
+</ul>
+<div class="note note-red icon-padding"><i class="note-icon fa-solid fa-bolt"></i><p>jsp有交互操作时,路径应设置为<code>/项目名/Servlet名</code></p>
+</div>
+<div class="note note-red icon-padding"><i class="note-icon fa-solid fa-bolt"></i><p>,Servlet中dispatcher跳转到jsp页面时,也要写上<code>/文件夹名/jsp文件名</code>(默认情况.</p>
+</div>
+<p>之前遇到了一个问题，最后自己摸索着突然就搞清楚了。<br>问题就是：新建的动态web项目，发布到tomcat之后:</p>
+<ul>
+<li>jsp可以单独访问</li>
+<li>servlet可以单独访问</li>
+</ul>
+<p><strong>但通过form表单跳转到servlet的类则出现404错误。</strong></p>
+<p>反复研究了很久也没发现解决方案，可能这是个最基础的设置吧，根本没有人解答。</p>
+<p>通过摸索,我发现最重要的一点就是servlet编译好之后生成的类,存放位置十分关键.</p>
+<p>按照默认设置的话,类是存放在build&#x2F;classes文件夹中的,</p>
+<p>但是由于我们建立的jsp文件是存放在web-content文件夹中的，</p>
+<p>所以jsp文件没法找到servlet生成的class文件。</p>
+<div class="note-large notel-red"><div class="notel-title"><p>解决办法:</p>
+</div><div class="notel-content"><p>解决方案就是在build path里面重新设置class的输出文件夹，放到web-inf文件夹下面的classes中,如果没有这个classes文件夹,则要自己新建一个。</p>
+ </div></div>]]></content>
+      <categories>
+        <category>servlet</category>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
+      </tags>
+  </entry>
 </search>

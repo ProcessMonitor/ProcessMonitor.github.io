@@ -14,24 +14,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2022/06/08/遗传算法/"/>
+    <link rel="canonical" href="http://example.com/2017/11/01/tomcat-server/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="paper上的算法…">
+        <meta name="description" content="一些本科时期跟tomcat的斗智斗勇">
 <meta property="og:type" content="article">
-<meta property="og:title" content="遗传算法">
-<meta property="og:url" content="http://example.com/2022/06/08/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="Tomcat Server">
+<meta property="og:url" content="http://example.com/2017/11/01/Tomcat-Server/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="paper上的算法…">
+<meta property="og:description" content="一些本科时期跟tomcat的斗智斗勇">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-08T08:10:52.000Z">
-<meta property="article:modified_time" content="2023-04-07T11:45:59.628Z">
+<meta property="article:published_time" content="2017-11-01T10:17:39.000Z">
+<meta property="article:modified_time" content="2023-04-07T14:14:35.190Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="服务推荐">
-<meta property="article:tag" content="遗传算法">
-<meta property="article:tag" content="推荐系统">
+<meta property="article:tag" content="tomcat">
 <meta name="twitter:card" content="summary">
     
     <!--- Icon Part-->
@@ -43,7 +41,7 @@
     
     <title>
         
-            遗传算法 -
+            Tomcat Server -
         
         C0de Print
     </title>
@@ -359,9 +357,10 @@
         <div class="article-content-container">
 
             
-            
-                <div class="article-title">
-                    <h1 class="article-title-regular">遗传算法</h1>
+             
+                <div class="article-title">         
+                    <img src="/imgs/normal_cover_pic.jpg" alt="Tomcat Server" />
+                    <h1 class="article-title-cover">Tomcat Server</h1>
                 </div>
             
                 
@@ -383,15 +382,15 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2022-06-08 16:10:52</span>
-        <span class="mobile">2022-06-08 16:10</span>
+        <span class="desktop">2017-11-01 18:17:39</span>
+        <span class="mobile">2017-11-01 18:17</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-07 19:45:59</span>
-            <span class="mobile">2023-04-07 19:45</span>
+            <span class="desktop">2023-04-07 22:14:35</span>
+            <span class="mobile">2023-04-07 22:14</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -402,11 +401,11 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/%E5%AD%A6%E6%9C%AF%E5%9E%83%E5%9C%BE/">学术垃圾</a>&nbsp;
+                        <a href="/categories/tomcat/">tomcat</a>&nbsp;
                     </li>
                 
                     <li>
-                        &gt; <a href="/categories/%E5%AD%A6%E6%9C%AF%E5%9E%83%E5%9C%BE/%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90/">服务推荐</a>&nbsp;
+                        &gt; <a href="/categories/tomcat/bug/">bug</a>&nbsp;
                     </li>
                 
             </ul>
@@ -418,15 +417,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90/">服务推荐</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/">遗传算法</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/">推荐系统</a>&nbsp;
+                        <a href="/tags/tomcat/">tomcat</a>&nbsp;
                     </li>
                 
             </ul>
@@ -436,7 +427,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>174 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>226 Words</span>
         </span>
     
     
@@ -453,46 +444,40 @@
             
 
             <div class="article-content markdown-body">
-                <p>paper上的算法…</p>
-<span id="more"></span>
-<h5 id="要素："><a href="#要素：" class="headerlink" title="要素："></a>要素：</h5><ol>
-<li><p>适应值：区分染色体优劣。</p>
-</li>
-<li><p>评估函数evaluation function：计算适应值。</p>
-</li>
-<li><p>选择算子selection ：按照规则进行选择，得到父代种群。</p>
-</li>
-<li><p>交配算子crossover：交换，产生新个体，子代染色体取代父代进入新种群</p>
-</li>
-<li><p>变异算子mutation：使新种群进行小概率变异，染色体发生变异的基因改变数值，得到新染色体。经过变异的新种群代替原有群体进入下一代进化。</p>
-</li>
-</ol>
-<h5 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h5><ol>
-<li>编码</li>
-<li>初始化种群</li>
-<li>适应值评价</li>
-<li>选择种群</li>
-<li>种群交配</li>
-<li>种群变异</li>
-</ol>
-<h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><p>编码方式影响交配crossover和变异 mutation操作等。</p>
+                <p>很多java web新手都遇到的错误:</p>
+<p>tomcat报错:</p>
+<div class="note note-bug description :"><p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+</div>
 
+<p>打开<code>https://localhost:8080</code>依旧如此</p>
+<p>解决办法:</p>
+<div class="tabs" id="tab-solution"><ul class="nav-tabs"><li class="tab active"><a class="#solution-1">step.1</a></li><li class="tab"><a class="#solution-2">step.2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="solution-1"><ul>
+<li>将服务器从eclipse的配置中删掉,重新添加新的服务器 双击. </li>
+<li>server locations 可选,勾选中间一个.</li>
+</ul>
+<p><strong>如果错误依旧存在 点第二步</strong></p></div><div class="tab-pane" id="solution-2"><p>若把jsp 文件 放到 WebContent 下面的文件夹里面 。</p>
+<p>你的访问路径应该为: <code>localhost:8080/你的项目名称/你的放jsp的文件夹/jsp文件名称.jsp</code></p>
+<p>例子: localhost:8080&#x2F;JSTLTest&#x2F;jsp&#x2F;JSTLTest.jsp</p>
+<p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
+
+<div class="note note-danger icon-padding"><i class="note-icon fa-solid fa-times-circle"></i><p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
+</div>
             </div>
 
             
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> 遗传算法</li>
+        <li><strong>Title:</strong> Tomcat Server</li>
         <li><strong>Author:</strong> Cheems</li>
-        <li><strong>Created at:</strong> 2022-06-08 16:10:52</li>
+        <li><strong>Created at:</strong> 2017-11-01 18:17:39</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-04-07 19:45:59
+                <strong>Updated at:</strong> 2023-04-07 22:14:35
             </li>
         
         <li>
-            <strong>Link:</strong> https://processmonitor.github.io/2022/06/08/遗传算法/
+            <strong>Link:</strong> https://processmonitor.github.io/2017/11/01/Tomcat-Server/
         </li>
         <li>
             <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
@@ -507,15 +492,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90/">#服务推荐</a>&nbsp;
-                        </li>
-                    
-                        <li class="tag-item">
-                            <a href="/tags/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/">#遗传算法</a>&nbsp;
-                        </li>
-                    
-                        <li class="tag-item">
-                            <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/">#推荐系统</a>&nbsp;
+                            <a href="/tags/tomcat/">#tomcat</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -525,15 +502,15 @@
   <div class="recommended-article-header">
     <i aria-hidden="true"></i><span>推荐阅读</span>
   </div>
-  <div class="recommended-article-group"><a class="recommended-article-item" href="/2022/04/08/关于服务推荐相关的idea记录/" title="服务推荐" rel="bookmark">
-  <img src="/images/wallhaven-wqery6-light.webp" alt="服务推荐">
-  <span class="title">服务推荐</span>
-</a><a class="recommended-article-item" href="/2017/11/01/Tomcat-Server/" title="Tomcat Server" rel="bookmark">
-  <img src="imgs/normal_cover_pic.jpg" alt="Tomcat Server">
-  <span class="title">Tomcat Server</span>
-</a><a class="recommended-article-item" href="/2022/04/25/Lambda表达式相关/" title="lambda 表达式合集" rel="bookmark">
-  <img src="/images/wallhaven-wqery6-light.webp" alt="lambda 表达式合集">
-  <span class="title">lambda 表达式合集</span>
+  <div class="recommended-article-group"><a class="recommended-article-item" href="/2017/11/23/Route-Bug/" title="Route Bug" rel="bookmark">
+  <img src="/images/wallhaven-wqery6-light.webp" alt="Route Bug">
+  <span class="title">Route Bug</span>
+</a><a class="recommended-article-item" href="/2022/04/07/Github设置ssh免密登陆并配置hexo/" title="Github设置ssh免密登陆并配置hexo" rel="bookmark">
+  <img src="imgs/normal_cover_pic.jpg" alt="Github设置ssh免密登陆并配置hexo">
+  <span class="title">Github设置ssh免密登陆并配置hexo</span>
+</a><a class="recommended-article-item" href="/2022/11/29/ElasticSearch/" title="关于ElasticSearch的运行Bug" rel="bookmark">
+  <img src="imgs/normal_cover_pic.jpg" alt="关于ElasticSearch的运行Bug">
+  <span class="title">关于ElasticSearch的运行Bug</span>
 </a></div>
 </div>
 
@@ -543,33 +520,18 @@
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2022/06/14/nginxConfInDocker/"
+                            href="/2017/11/23/Route-Bug/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">nginxConfInDocker</span>
+                                    <span class="post-nav-title-item">Route Bug</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
                         </div>
                     
-                    
-                        <div class="article-next">
-                            <a class="next"
-                            rel="next"
-                            href="/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/"
-                            >
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">lambda 表达式合集</span>
-                                    <span class="post-nav-item">Next posts</span>
-                                </span>
-                                <span class="right arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </span>
-                            </a>
-                        </div>
                     
                 </div>
             
@@ -628,7 +590,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">遗传算法</div>
+        <div class="page-title">Tomcat Server</div>
         
 
     </div>
