@@ -38,10 +38,14 @@
 <p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
 ]]></content>
       <categories>
-        <category>ElasticSearch - bug</category>
+        <category>ElasticSearch</category>
+        <category>bug</category>
       </categories>
       <tags>
-        <tag>ElasticSearch - ES - bug - 分布式</tag>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -90,8 +94,15 @@
 <div class="note note-danger icon-padding"><i class="note-icon fa-solid fa-times-circle"></i><p>注意: 用户名是你 github的名字 不是之前的登录Username and 看好你的git默认的branch是什么</p>
 </div>
 ]]></content>
+      <categories>
+        <category>config</category>
+        <category>bug</category>
+        <category>ssh</category>
+      </categories>
       <tags>
-        <tag>hexo, github ,ssh</tag>
+        <tag>hexo</tag>
+        <tag>github</tag>
+        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
@@ -109,8 +120,12 @@
 <div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+      <categories>
+        <category>lambda</category>
+      </categories>
       <tags>
-        <tag>java, lambda</tag>
+        <tag>java</tag>
+        <tag>lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -165,8 +180,13 @@
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">main body output1 </span><br><span class="line">main body output2 </span><br><span class="line">return func call</span><br><span class="line">defer func call</span><br><span class="line">Who is first? 1</span><br><span class="line">f3</span><br><span class="line">f2</span><br><span class="line">f1</span><br><span class="line">main end2</span><br><span class="line">main end1</span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
+      <categories>
+        <category>Go</category>
+        <category>golang</category>
+      </categories>
       <tags>
-        <tag>go, goland ,Go</tag>
+        <tag>Go</tag>
+        <tag>golang</tag>
       </tags>
   </entry>
   <entry>
@@ -177,8 +197,13 @@
 
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure></div>
 <!-- end -->]]></content>
+      <categories>
+        <category>config</category>
+        <category>nginx</category>
+      </categories>
       <tags>
-        <tag>nginx, docker, backup</tag>
+        <tag>nginx</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -209,14 +234,18 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/redis_distribute.svg"
+                     data-src="/imgs/redis_distribute.svg"
                       alt="redis案例"
                 ></p>
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>redis</category>
+        <category>分布式</category>
+      </categories>
       <tags>
-        <tag>redis, distributed lock</tag>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -247,10 +276,13 @@
 </ol>
 ]]></content>
       <categories>
-        <category>学术垃圾 - 服务推荐</category>
+        <category>学术垃圾</category>
+        <category>服务推荐</category>
       </categories>
       <tags>
-        <tag>服务推荐 - 随笔 - 推荐系统</tag>
+        <tag>服务推荐</tag>
+        <tag>推荐系统</tag>
+        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
@@ -281,7 +313,15 @@
 <h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><p>编码方式影响交配crossover和变异 mutation操作等。</p>
 ]]></content>
       <tags>
-        <tag>服务推荐 - 遗传算法 - 推荐系统</tag>
+        <tag>服务推荐</tag>
+        <tag>遗传算法</tag>
+        <tag>推荐系统</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>sticky on top</title>
+    <url>/2023/04/07/sticky-on-top/</url>
+    <content><![CDATA[<p>置顶文章来了我的老babe们。</p>
+]]></content>
   </entry>
 </search>
