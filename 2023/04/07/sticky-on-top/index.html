@@ -452,7 +452,7 @@
     <i aria-hidden="true"></i><span>推荐阅读</span>
   </div>
   <div class="recommended-article-group"><a class="recommended-article-item" href="/2017/11/23/Route-Bug/" title="Route Bug" rel="bookmark">
-  <img src="/images/wallhaven-wqery6-light.webp" alt="Route Bug">
+  <img src="imgs/normal_cover_pic.jpg" alt="Route Bug">
   <span class="title">Route Bug</span>
 </a><a class="recommended-article-item" href="/2022/04/07/Github设置ssh免密登陆并配置hexo/" title="Github设置ssh免密登陆并配置hexo" rel="bookmark">
   <img src="imgs/normal_cover_pic.jpg" alt="Github设置ssh免密登陆并配置hexo">
@@ -488,47 +488,59 @@
 
             
                 <div class="comment-container">
-                    if (hexo-config('comment.enable') == true && hexo-config('comment.system') != "") {
-  if (hexo-config('comment.system') == "waline") {
-    @require "./waline.styl"
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
 
-  } else if (hexo-config('comment.system') == "gitalk") {
-    @require "./gitalk.styl"
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
 
-  } else if (hexo-config('comment.system') == "twikoo") {
-    @require "./twikoo.styl"
-  }
-}
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
 
-.comments-container {
-  display inline-block
-  margin-top $spacing-unit
-  width 100%
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'ca3cf79aa58768e464f7',
+                    clientSecret: 'c4d93bbd2923344a1d6e073c8cd295af0784cd73',
+                    repo: 'BlogComment',
+                    owner: 'ProcessMonitor',
+                    admin: ['ProcessMonitor'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
 
-  #comment-anchor {
-    width 100%
-    height 10px
-  }
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
 
-  .comment-area-title {
-    width 100%
-    margin 10px 0
-    font-size 1.38rem
-    color var(--default-text-color)
-    font-family "Noto Sans", "Noto Sans SC",sans-serif
-    font-weight bold
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
 
-    i {
-      color var(--default-text-color)
-    }
 
-    +redefine-tablet() {
-      margin 5px 0
-      font-size 1.2rem
-    }
-  }
 
-}
+        
+    
+</div>
 
                 </div>
             
