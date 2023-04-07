@@ -10,31 +10,27 @@
 <ul>
 <li>文件描述符fd太少:</li>
 </ul>
-<p>切换到root用户 查看硬限制</p>
+<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Solution</a></li><li class="tab"><a class="#first-unique-name-2">Second</a></li><li class="tab"><a class="#first-unique-name-3">Third</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div>
 
-<p>在limits配置文件中添加下面设置:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
 <p><em>(adam是本地用户,替换你自己的)</em></p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
 
-<p>退出用户重新登录，使配置生效</p>
-<p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
+<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
 
 <p>找到文件中的如下内容:</p>
 <div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
 
-<p>修改为</p>
+<p>修改为:</p>
 <div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
-<p>接下来在:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure></div>
 
-<p>添加下面配置:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
+<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
 
 <p>并执行:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
 
 <p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> (official guide doc)中这么写的:</p>
 <p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
@@ -64,9 +60,9 @@
 <div class="tabs" id="tab-ssh-gen-setting"><ul class="nav-tabs"><li class="tab active"><a class="#ssh-gen-setting-1">step 0</a></li><li class="tab"><a class="#ssh-gen-setting-2">step 1</a></li><li class="tab"><a class="#ssh-gen-setting-3">step 2</a></li><li class="tab"><a class="#ssh-gen-setting-4">step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ssh-gen-setting-1"><p><strong>Step 0.生成密钥对</strong></p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure></div>
 
-<p>0.1 删除已经存在的 .ssh 目录(如果有)</p>
+<p>· 删除已经存在的 .ssh 目录(如果有)</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br></pre></td></tr></table></figure></div>
-<p>0.2 生成密钥对.</p>
+<p>· 生成密钥对.</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure></div>
 
 <ul>
@@ -79,13 +75,13 @@
 </ul></div><div class="tab-pane" id="ssh-gen-setting-3"><p><strong>Step 2. 查看id_rsa.pub （公钥</strong></p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure></div>
 
-<p>复制下来(所有)</p></div><div class="tab-pane" id="ssh-gen-setting-4"><p><strong>Step 3.GitHub Account Setting</strong><br>3.1 登录 GitHub，点击用户头像→Settings→SSHandGPG keys<br>3.2 点击 New SSH Key 复制到Key 文本框中 Title 随便起名<br>3.3 Add SSH Key 就可以了</p></div></div></div>
+<p>复制下来(所有)</p></div><div class="tab-pane" id="ssh-gen-setting-4"><p><strong>Step 3.GitHub Account Setting</strong><br>· 登录 GitHub，点击用户头像→Settings→SSHandGPG keys<br>· 点击 New SSH Key 复制到Key 文本框中 Title 随便起名<br>· Add SSH Key 就可以了</p></div></div></div>
 
 <hr>
 <ul>
 <li>接下来是 hexo 配置</li>
 </ul>
-<div class="tabs" id="tab-hexo-setting"><ul class="nav-tabs"><li class="tab active"><a class="#hexo-setting-1">setp 1</a></li><li class="tab"><a class="#hexo-setting-2">Finish</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-setting-1"><p>验证下是否配置是否生效:</p>
+<div class="tabs" id="tab-hexo-setting"><ul class="nav-tabs"><li class="tab active"><a class="#hexo-setting-1">setp 1</a></li><li class="tab"><a class="#hexo-setting-2">done</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-setting-1"><p>验证下是否配置是否生效:</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
 
 <p>显示successfully xxxx 就OK</p></div><div class="tab-pane" id="hexo-setting-2"><p>最后配置_config.yml:</p>
@@ -213,17 +209,11 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/Users/zwq/Documents/hexoBlog/source/images/redis%E6%A1%88%E4%BE%8B.png"
+                     data-src="/images/redis_distribute.svg"
                       alt="redis案例"
                 ></p>
 </li>
 </ul>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-
-
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
-
 ]]></content>
       <tags>
         <tag>redis, distributed lock</tag>
