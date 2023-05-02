@@ -402,8 +402,7 @@
   <entry>
     <title>Suit 80 Owlab</title>
     <url>/2023/05/02/Suit%2080%20Owlab/</url>
-    <content><![CDATA[<p>🛒 购物清单：</p>
-<ul>
+    <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
 <li>Owlab旗舰店：<ul>
 <li>suit80pcb（带夹心棉、轴下垫）</li>
 <li><del>suit80子板（可不要）</del></li>
@@ -431,17 +430,15 @@
 <li><p>先润卫星轴，十字菊花的底座两侧薄润，钢丝的拐角处根据自己需求厚润，钢丝短边尽头厚润 （不需要太规整，从后面插入轴座会摊平）。</p>
 </li>
 <li><p>大键位贴上特氟龙胶带，放上轴下垫，安装卫星轴。</p>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路，虽说绕着走线但还是小心点好毕竟pcb最贵。</p>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路。</p>
 </div>
 </li>
 <li><p>依次铺上夹心棉、定位板，注意80 lite定位板卫星轴处开孔很紧，慢慢扣下去。</p>
 </li>
 <li><p>上轴体，选自己喜欢的。</p>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
+</div>
 </li>
-</ol>
-<p>​	<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
-</div></p>
-<ol start="5">
 <li><p>在定位板上下两边突出的“胳膊”上装硅胶粒，每个胳膊两端都要装。</p>
 </li>
 <li><p>子板装底壳，并上好螺丝，装到pcb（注意子板安装线材顺序，有防呆口一般不会错，但防呆不防傻 -_-）</p>
