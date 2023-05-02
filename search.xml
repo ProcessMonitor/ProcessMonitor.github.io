@@ -39,7 +39,6 @@
 ]]></content>
       <categories>
         <category>ElasticSearch</category>
-        <category>bug</category>
       </categories>
       <tags>
         <tag>ElasticSearch</tag>
@@ -95,9 +94,7 @@
 </div>
 ]]></content>
       <categories>
-        <category>config</category>
-        <category>bug</category>
-        <category>ssh</category>
+        <category>Config</category>
       </categories>
       <tags>
         <tag>hexo</tag>
@@ -121,7 +118,7 @@
 
 <h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
       <categories>
-        <category>lambda</category>
+        <category>语言</category>
       </categories>
       <tags>
         <tag>java</tag>
@@ -181,8 +178,7 @@
 
 ]]></content>
       <categories>
-        <category>Go</category>
-        <category>golang</category>
+        <category>语言</category>
       </categories>
       <tags>
         <tag>Go</tag>
@@ -198,8 +194,7 @@
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure></div>
 <!-- end -->]]></content>
       <categories>
-        <category>config</category>
-        <category>nginx</category>
+        <category>Config</category>
       </categories>
       <tags>
         <tag>nginx</tag>
@@ -241,8 +236,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>redis</category>
-        <category>分布式</category>
+        <category>数据库</category>
       </categories>
       <tags>
         <tag>redis</tag>
@@ -278,7 +272,6 @@
 ]]></content>
       <categories>
         <category>学术垃圾</category>
-        <category>服务推荐</category>
       </categories>
       <tags>
         <tag>服务推荐</tag>
@@ -315,7 +308,6 @@
 ]]></content>
       <categories>
         <category>学术垃圾</category>
-        <category>服务推荐</category>
       </categories>
       <tags>
         <tag>服务推荐</tag>
@@ -354,8 +346,7 @@
 <a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78627140' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>
 ]]></content>
       <categories>
-        <category>tomcat</category>
-        <category>bug</category>
+        <category>Server</category>
       </categories>
       <tags>
         <tag>Tomcat</tag>
@@ -392,8 +383,7 @@
 
 <a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78615827' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>]]></content>
       <categories>
-        <category>servlet</category>
-        <category>bug</category>
+        <category>Server</category>
       </categories>
       <tags>
         <tag>Servlet</tag>
