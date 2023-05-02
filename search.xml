@@ -51,12 +51,12 @@
   <entry>
     <title>Github设置ssh免密登陆并配置hexo</title>
     <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
-    <content><![CDATA[<div class="note-large notel-blue"><div class="notel-title"><p>今日写完文章deploy的时候时候报错:</p>
+    <content><![CDATA[<div class="note-large notel-blue"><div class="notel-title"><p>hexo</p>
 </div><div class="notel-content"><ul>
 <li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
 </ul>
  </div></div>
-<span id="more"></span>
+<!-- more -->
 
 
 <p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
@@ -209,7 +209,7 @@
   <entry>
     <title>redis相关</title>
     <url>/2022/11/01/redis%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<ul>
+    <content><![CDATA[<h3 id="配合官方文档食用更佳"><a href="#配合官方文档食用更佳" class="headerlink" title="配合官方文档食用更佳"></a>配合官方文档食用更佳</h3><ul>
 <li>rediesson（<a class="link"   href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95" >官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）<span id="more"></span></li>
 </ul>
 <p>（逃离繁杂的加锁解锁操作，把精力放在业务功能实现上）</p>
@@ -397,6 +397,72 @@
       </categories>
       <tags>
         <tag>Servlet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Suit 80 Owlab</title>
+    <url>/2023/05/02/Suit%2080%20Owlab/</url>
+    <content><![CDATA[<p>🛒 购物清单：</p>
+<ul>
+<li>Owlab旗舰店：<ul>
+<li>suit80pcb（带夹心棉、轴下垫）</li>
+<li><del>suit80子板（可不要）</del></li>
+<li>消音包（底棉）</li>
+</ul>
+</li>
+<li>HYPERBORING：<ul>
+<li>tiger 80 lite定位板</li>
+<li>tiger 80子板</li>
+</ul>
+</li>
+<li>KBDfans<ul>
+<li>tiger 80 lite外壳</li>
+<li>gasket硅胶粒</li>
+</ul>
+</li>
+<li>MONE客制化<ul>
+<li>MONE v2 卫星轴</li>
+</ul>
+</li>
+<li>昆仑白色特种润滑脂2号</li>
+<li>轴体、type-c口的连接线</li>
+</ul>
+<h3 id="⌨️-组装："><a href="#⌨️-组装：" class="headerlink" title="⌨️ 组装："></a>⌨️ 组装：</h3><ol>
+<li><p>先润卫星轴，十字菊花的底座两侧薄润，钢丝的拐角处根据自己需求厚润，钢丝短边尽头厚润 （不需要太规整，从后面插入轴座会摊平）。</p>
+</li>
+<li><p>大键位贴上特氟龙胶带，放上轴下垫，安装卫星轴。</p>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路，虽说绕着走线但还是小心点好毕竟pcb最贵。</p>
+</div>
+</li>
+<li><p>依次铺上夹心棉、定位板，注意80 lite定位板卫星轴处开孔很紧，慢慢扣下去。</p>
+</li>
+<li><p>上轴体，选自己喜欢的。</p>
+</li>
+</ol>
+<p>​	<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
+</div></p>
+<ol start="5">
+<li><p>在定位板上下两边突出的“胳膊”上装硅胶粒，每个胳膊两端都要装。</p>
+</li>
+<li><p>子板装底壳，并上好螺丝，装到pcb（注意子板安装线材顺序，有防呆口一般不会错，但防呆不防傻 -_-）</p>
+</li>
+<li><p>扣上外壳。</p>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>扣之前记得把上壳两侧突出的加强筋剪掉，不然会卡定为板盖不严（👉这样的手指形状）</p>
+</div>
+</li>
+<li><p>上外壳螺丝（包装里细黑的最长的那个） 。</p>
+</li>
+<li><p>连线测试。</p>
+</li>
+</ol>
+<h3 id="🎤打字音视频："><a href="#🎤打字音视频：" class="headerlink" title="🎤打字音视频："></a>🎤打字音视频：</h3><p>先欠着。挺好听的 性价比很高的麻将。</p>
+]]></content>
+      <categories>
+        <category>I/O equipment</category>
+      </categories>
+      <tags>
+        <tag>mechanical keyboard</tag>
+        <tag>customize</tag>
       </tags>
   </entry>
 </search>
