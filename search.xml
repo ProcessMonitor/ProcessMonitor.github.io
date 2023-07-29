@@ -10,7 +10,7 @@
 <ul>
 <li>文件描述符fd太少:</li>
 </ul>
-<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Solution</a></li><li class="tab"><a class="#first-unique-name-2">Second</a></li><li class="tab"><a class="#first-unique-name-3">Third</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
+<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
 
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
@@ -32,10 +32,13 @@
 <p>并执行:</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
 
-<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> (official guide doc)中这么写的:</p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
 <p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
+<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
 <p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
+<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
 <p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
+<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
 ]]></content>
       <categories>
         <category>ElasticSearch</category>
