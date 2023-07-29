@@ -39,7 +39,8 @@
 <p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
 <p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
 <p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
-]]></content>
+<p>info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">log   [05:27:21.074] [error][plugins][taskManager][taskManager] Failed to poll for work: Error: work has timed out</span><br><span class="line">log   [05:27:21.253] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:endpoint:user-artifact-packager:1.0.0]: version conflict, document already exists (current version [548])</span><br><span class="line">log   [05:27:21.280] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:Alerting-alerting_telemetry]: version conflict, document already exists (current version [25])</span><br><span class="line">log   [05:27:21.350] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:apm-telemetry-task]: version conflict, document already exists (current version [25])</span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>ElasticSearch</category>
       </categories>
@@ -453,6 +454,27 @@
       </categories>
       <tags>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ES+Kibana整合bug</title>
+    <url>/2023/07/29/ES-Kibana%E6%95%B4%E5%90%88/</url>
+    <content><![CDATA[<p>console info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
+
+<p>突然意识到Document 是ES中的索引库啊，那说明是索引库版本不一致咯前面的 task:apm-telementry 等等应该是索引库的名字 我给他删除了一下试了试，成功了。<br>但是如果是实际的开发工作中遇到这种情况，也不能删掉索引库的情况，该怎么办呢？</p>
+<p>所以我来看官网了。</p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control" >如何处理版本冲突 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control" >乐观并发控制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>也算是从这个一个小bug 里面学到了如何检索自己的问题 如何排检索优先级：</p>
+<p>官方文档 &gt;&gt; 该项目的Github issue &gt; 各开源论坛 </p>
+<p>今天先写到这 先不排版了。</p>
+]]></content>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>Kibana</tag>
       </tags>
   </entry>
 </search>
