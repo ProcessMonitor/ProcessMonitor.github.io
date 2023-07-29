@@ -39,8 +39,7 @@
 <p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
 <p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
 <p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
-<p>info:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">log   [05:27:21.074] [error][plugins][taskManager][taskManager] Failed to poll for work: Error: work has timed out</span><br><span class="line">log   [05:27:21.253] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:endpoint:user-artifact-packager:1.0.0]: version conflict, document already exists (current version [548])</span><br><span class="line">log   [05:27:21.280] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:Alerting-alerting_telemetry]: version conflict, document already exists (current version [25])</span><br><span class="line">log   [05:27:21.350] [error][data][elasticsearch] [version_conflict_engine_exception]: [task:apm-telemetry-task]: version conflict, document already exists (current version [25])</span><br></pre></td></tr></table></figure></div>]]></content>
+]]></content>
       <categories>
         <category>ElasticSearch</category>
       </categories>
