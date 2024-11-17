@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>ES+Kibana整合bug</title>
+    <url>/2023/07/29/ES-Kibana%E6%95%B4%E5%90%88/</url>
+    <content><![CDATA[<p>console info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
+
+<p>突然意识到Document 是ES中的索引库啊，那说明是索引库版本不一致咯前面的 task:apm-telementry 等等应该是索引库的名字 我给他删除了一下试了试，成功了。<br>但是如果是实际的开发工作中遇到这种情况，也不能删掉索引库的情况，该怎么办呢？</p>
+<p>所以我来看官网了。</p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control" >如何处理版本冲突 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control" >乐观并发控制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>也算是从这个一个小bug 里面学到了如何检索自己的问题 如何排检索优先级：</p>
+<p>官方文档 &gt;&gt; 该项目的Github issue &gt; 各开源论坛 </p>
+<p>今天先写到这 先不排版了。</p>
+]]></content>
+      <categories>
+        <category>ElasticSearch</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>Kibana</tag>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于ElasticSearch的运行Bug</title>
+    <url>/2022/11/29/ElasticSearch/</url>
+    <content><![CDATA[<p>info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
+<span id="more"></span>
+<p> <code>原因:</code></p>
+<ul>
+<li>文件描述符fd太少:</li>
+</ul>
+<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
+<p><em>(adam是本地用户,替换你自己的)</em></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
+
+<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
+
+<p>找到文件中的如下内容:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
+
+<p>修改为:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
+
+<p>并执行:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
+
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
+<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
+<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
+<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
+<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
+<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
+<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
+]]></content>
+      <categories>
+        <category>ElasticSearch</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Github设置ssh免密登陆并配置hexo</title>
+    <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
+    <content><![CDATA[
+  <div class="note-large blue">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>deploy的时候时候报错:</p>
+
+    </div>
+    <div class="notel-content">
+      <ul>
+<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
+</ul>
+
+    </div>
+  </div>
+<!-- more -->
+
+
+<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><hr>
+<div class="tabs" id="tab-ssh-gen-setting"><ul class="nav-tabs"><li class="tab active"><a class="#ssh-gen-setting-1">step 0</a></li><li class="tab"><a class="#ssh-gen-setting-2">step 1</a></li><li class="tab"><a class="#ssh-gen-setting-3">step 2</a></li><li class="tab"><a class="#ssh-gen-setting-4">step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ssh-gen-setting-1"><p><strong>Step 0.生成密钥对</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure></div>
+
+<p>· 删除已经存在的 .ssh 目录(如果有)</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br></pre></td></tr></table></figure></div>
+<p>· 生成密钥对.</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>遇到提示enter就OK(也可以自己命名密钥名称,提取密码等,这里默认)</li>
+</ul></div><div class="tab-pane" id="ssh-gen-setting-2"><p><strong>Step 1.进入本地ssh目录</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>此目录下的 id_rsa 就是你的私钥(要保存好 ❌不要泄露❌  )</li>
+</ul></div><div class="tab-pane" id="ssh-gen-setting-3"><p><strong>Step 2. 查看id_rsa.pub （公钥</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure></div>
+
+<p>复制下来(所有)</p></div><div class="tab-pane" id="ssh-gen-setting-4"><p><strong>Step 3.GitHub Account Setting</strong><br>· 登录 GitHub，点击用户头像→Settings→SSHandGPG keys<br>· 点击 New SSH Key 复制到Key 文本框中 Title 随便起名<br>· Add SSH Key 就可以了</p></div></div></div>
+
+<hr>
+<ul>
+<li>接下来是 hexo 配置</li>
+</ul>
+<div class="tabs" id="tab-hexo-setting"><ul class="nav-tabs"><li class="tab active"><a class="#hexo-setting-1">setp 1</a></li><li class="tab"><a class="#hexo-setting-2">done</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-setting-1"><p>验证下是否配置是否生效:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
+
+<p>显示successfully xxxx 就OK</p></div><div class="tab-pane" id="hexo-setting-2"><p>最后配置_config.yml:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></div></div></div></div>
+
+
+  <div class="note p-4 mb-4 rounded-small danger">
+    <p>注意: 用户名是你 github的名字 不是之前的登录Username and 看好你的git默认的branch是什么</p>
+
+  </div>
+]]></content>
+      <categories>
+        <category>Config</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>github</tag>
+        <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>My Elasticsearch User Guide</title>
+    <url>/2023/07/29/My-Elasticsearch-User-Guide/</url>
+    <content><![CDATA[<ol>
+<li>商品搜索专题</li>
+</ol>
+<p>一、如何搜素？</p>
+<p>大量数据检索的时候 会产生索引失效的问题</p>
+<p>1)like 失效等情况…<br>参考文章: <a class="link"   href="https://www.51cto.com/article/702691.html" >mysql索引失效, 51cto的文章 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>2)where失效，or条件失效，or的左边索引列，右边不是索引列即会失效。</p>
+<p>3)包括select * 的滥用</p>
+<p>example : select * from goods where title like ‘%小米%’;<br>数据量庞大时，应该如何处理？</p>
+<p>二、使用全文检索</p>
+<p>1)数据的分类<br>    1.结构化数据：<br>        固定格式、有限长度、数据类型固定。<br>        - 例如：数据库中的数据就是结构化数据。<br>    2.非结构化数据：<br>        长度不固定、数据类型不固定、格式不固定。<br>    解决办法：<br>        针对结构化数据 sql语句查询<br>        非结构化数据:<br>            1.顺序扫描 : 性能差<br>            2.全文检索 : 划分词等 - 针对单词建立索引 - 对索引全文检索<br>            先划分词然后查询索引的过程就叫做全文搜索，索引占用额外的磁盘空间 空间换时间<br>2)全文搜索应用场景<br>    1.搜索引擎<br>        爬虫之后的分词创建索引，搜索时直接搜索索引。<br>    2.站内搜索<br>        电商网站，各大社交平台、论坛等等<br>    3.磁盘文件等等</p>
+<p>3)如何实现全文检索<br>    1.lucene 在java 中唯一可以使用的全文检索技术<br>        基于java的全文检索工具包。（偏底层<br>    2.Solr、Elasticsearch（底层是lucene<br>        都是基于Lucene的全文检索服务器，独立运行，支持集群。<br>        实时搜索 es性能更好</p>
+<p>4）全文检索流程<br>    一、创建索引<br>        1.采集数据<br>            各种来源的数据。(磁盘 网站 文本 图片url etc…)<br>        2.分析数据<br>            关键词拆分<br>            去标点<br>            去除停用词<br>            转化大小写<br>            得到单词列表<br>        3.创建文档对象<br>            把原始文档进行封装 Document对象（相当于一个数据库）<br>            field：一个document可以有多个field 文件名 文件 等信息，并不是所有的field都需要分析 比如文件路径。<br>            然后关键词拆分，取出标点符号去除重复词 转换大小写 最终得到一个单词列表<br>            每个关键词都是一个term<br>        4.创建索引库<br>            基于关键词（term）创建索引<br>            封装Document对象<br>            索引库存放的是关键词和Document的关系<br>    二、查询索引大致流程<br>        1.用户接口<br>            用户输入查询内容。<br>            输入可以是一个关键词，也可以是一句话。<br>        2.封装查询条件<br>            需要把用户内容进行分词处理。<br>            需要指定要查询的field<br>            查询条件：<br>                field ：value<br>            遵循以上格式<br>        3.执行查询<br>            在索引中根据查询条件查询对应字段，找到对应关键词。<br>            关键词存在就查询到结果，不存在就没结果。<br>            根据关键词找到文档id，根据文档id找到document对象<br>            <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/source/imgs/es%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E6%B5%81%E7%A8%8B.png"
+                      alt="ES全文检索流程"
+                ><br>        4.结果中关键词部分高亮显示，分页处理，根据相关度进行排序</p>
+<p>2.ES部分</p>
+<p>1）对应关系：</p>
+<p>ES      ：索引库    -&gt; (type)-&gt; Document -&gt; field</p>
+<p>mysql   ：Database -&gt; table -&gt; 行       -&gt; 列</p>
+<p>2）ES API的方法</p>
+<p>基于restful接口管理的索引库：<br>方法（增删改查）：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">put（post） 、delete 、post（put） 、get</span><br></pre></td></tr></table></figure></div>
+<p>url：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">localhost:9200/&#123;索引名称&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>Mapping相关</li>
+</ol>
+<p>就是索引文档中文档格式的定义：字段名称，对应的数据类型，是否索引，是否存储，是否分词等。</p>
+<p>最好是先定义mapping 再添加数据，也可以直接添加让es自己根据document格式推断出mapping 定义。</p>
+<p>1.创建mapping</p>
+<p>方法:<br>    PUT</p>
+<p>url:<br>    ip address:9200&#x2F;{索引名称}&#x2F;_mappings<br>    例如: 192.168.57.10:9200&#x2F;blog&#x2F;_mappings<br>请求体:</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mappings&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="comment">// es6.x 版本之前有type字段: </span></span><br><span class="line">        <span class="comment">// &quot;myblog&quot;:&#123;&#125;,</span></span><br><span class="line">        <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">            <span class="comment">//文档id 这个id可以更改 :</span></span><br><span class="line">            <span class="attr">&quot;id&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="comment">//id数据类型 long</span></span><br><span class="line">                <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;long&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">//文档 名称：</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="comment">//名称数据类型 文本类型 分词功能只支持text类型 keyword也可以存储字符串但不能分词。</span></span><br><span class="line">                <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;text&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="comment">// 默认分词器</span></span><br><span class="line">                <span class="attr">&quot;analyzer&quot;</span><span class="punctuation">:</span><span class="string">&quot;standard&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="comment">//document的整个内容是否展示给用户 展示就存储 （一般展示网页摘要</span></span><br><span class="line">                <span class="attr">&quot;store&quot;</span><span class="punctuation">:</span><span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="comment">// 是否为索引 true可以不加引号 有分词需求必须要创建索引 有些不需要 比如身份证号 手机号 不需要分词</span></span><br><span class="line">                <span class="attr">&quot;index&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">//用户手机号</span></span><br><span class="line">            <span class="attr">&quot;mobile&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;keyword&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;store&quot;</span><span class="punctuation">:</span><span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;index&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">//备注</span></span><br><span class="line">            <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;type&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;text&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;analyzer&quot;</span><span class="punctuation">:</span><span class="string">&quot;standard&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;store&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;index&quot;</span> <span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<ol start="4">
+<li><p>Settings 相关</p>
+<p> 创建索引库的时候设置settings 属性。</p>
+<p> 1.创建Settings</p>
+</li>
+</ol>
+<p>方法:<br>    PUT</p>
+<p>url:<br>    ip address:9200&#x2F;{索引名称}&#x2F;_settings<br>    例如: 192.168.57.10:9200&#x2F;blog&#x2F;_settings<br>请求体:</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;mappings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="comment">//该索引库的分片数量 创建后无法修改</span></span><br><span class="line">        <span class="attr">&quot;number_of_shards&quot;</span> <span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">        <span class="comment">//副本数量</span></span><br><span class="line">        <span class="attr">&quot;number_of_replies&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>创建索引库之后分片数量不可以再修改了，只可以修改副本数量。</li>
+</ul>
+<p>POST修改</p>
+<p>ip address:9200&#x2F;{索引名称}&#x2F;_doc&#x2F;{唯一的文件id}</p>
+<p>请求体：</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span><span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span><span class="string">&quot;hshshshshshs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;content&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;dnsinapkp&quot;</span></span><br><span class="line">    <span class="comment">// etc</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>DELETE删除<br>url：ip address:9200&#x2F;{索引名称}&#x2F;_doc&#x2F;{唯一的文件id}</p>
+<p>GET搜索（根据url的唯一的_id取文档）<br>url：ip address:9200&#x2F;{索引名称}&#x2F;_doc&#x2F;{唯一的文件id}</p>
+<ul>
+<li>Es 查找自动分词 默认分词器叫做standard 处理英文根据空格处理。处理中文是一个汉字一个关键词。</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>lambda 表达式合集</title>
+    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<p>来自java8的“新”特性…</p>
+<span id="more"></span>
+<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<!-- more -->
+<p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure></div>
+
+<p>双列集合: 转换成单列集合在创建流(就是套娃)</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+      <categories>
+        <category>Language</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>lambda</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring基础一篇就够了</title>
+    <url>/2023/08/06/Spring%E5%9F%BA%E7%A1%80%E4%B8%80%E7%AF%87%E5%B0%B1%E5%A4%9F%E4%BA%86/</url>
+    <content><![CDATA[<p>目标：<br>理解IoC （inverse of control）&#x2F;DI （dependency injection）<br>理解 AOP（面向切面编程）</p>
+<p>Spring是什么？（不是重点一笔带过）<br>是软件层面的框架，无特定场景，是一个管理者形象，企业级开发框架，让企业级应用更快开发，优势就是让企业级项目可以做分层架构，开发者可以选择组件模块化开发。<br>目前已经有各个不同层的解决方案，比如：<br>MVC：有strust2 SpringMVC<br>ORMapping：Hibernate Mybatis Spring Data<br>微服务分布式架构：Spring Cloud<br>它的两大核心就是 IoC &#x2F; AOP</p>
+<p>企业级项目一般： 用户量大 并发量高 功能模块多又复杂；性能、安全性要求高；需求变化快，业务又复杂。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Suit 80 Owlab</title>
+    <url>/2023/05/02/Suit%2080%20Owlab/</url>
+    <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
+<li>Owlab旗舰店：<ul>
+<li>suit80pcb（带夹心棉、轴下垫）</li>
+<li><del>suit80子板（可不要）</del></li>
+<li>消音包（底棉）</li>
+</ul>
+</li>
+<li>HYPERBORING：<ul>
+<li>tiger 80 lite定位板</li>
+<li>tiger 80子板</li>
+</ul>
+</li>
+<li>KBDfans<ul>
+<li>tiger 80 lite外壳</li>
+<li>gasket硅胶粒</li>
+</ul>
+</li>
+<li>MONE客制化<ul>
+<li>MONE v2 卫星轴</li>
+</ul>
+</li>
+<li>昆仑白色特种润滑脂2号</li>
+<li>轴体、type-c口的连接线</li>
+</ul>
+<h3 id="⌨️-组装："><a href="#⌨️-组装：" class="headerlink" title="⌨️ 组装："></a>⌨️ 组装：</h3><ol>
+<li><p>先润卫星轴，十字菊花的底座两侧薄润，钢丝的拐角处根据自己需求厚润，钢丝短边尽头厚润 （不需要太规整，从后面插入轴座会摊平）。</p>
+</li>
+<li><p>大键位贴上特氟龙胶带，放上轴下垫，安装卫星轴。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路。</p>
+
+  </div>
+</li>
+<li><p>依次铺上夹心棉、定位板，注意80 lite定位板卫星轴处开孔很紧，慢慢扣下去。</p>
+</li>
+<li><p>上轴体，选自己喜欢的。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
+
+  </div>
+</li>
+<li><p>在定位板上下两边突出的“胳膊”上装硅胶粒，每个胳膊两端都要装。</p>
+</li>
+<li><p>子板装底壳，并上好螺丝，装到pcb（注意子板安装线材顺序，有防呆口一般不会错，但防呆不防傻 -_-）</p>
+</li>
+<li><p>扣上外壳。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>扣之前记得把上壳两侧突出的加强筋剪掉，不然会卡定为板盖不严（👉这样的手指形状）</p>
+
+  </div>
+</li>
+<li><p>上外壳螺丝（包装里细黑的最长的那个） 。</p>
+</li>
+<li><p>连线测试。</p>
+</li>
+</ol>
+<h3 id="🎤打字音视频："><a href="#🎤打字音视频：" class="headerlink" title="🎤打字音视频："></a>🎤打字音视频：</h3><p>先欠着。挺好听的 性价比很高的麻将。</p>
+]]></content>
+      <categories>
+        <category>I/O equipment</category>
+      </categories>
+      <tags>
+        <tag>mechanical keyboard</tag>
+        <tag>customize</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Route Bug</title>
+    <url>/2017/11/23/Route-Bug/</url>
+    <content><![CDATA[<p>跟上篇文章一样也是很多java web新手都遇到的错误:<br><code>jsp跳转到Servlet 出现404路径错误:</code></p>
+<!-- 
+  <div class="note p-4 mb-4 rounded-small bug description :">
+    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+
+  </div> -->
+
+<ul>
+<li>检查:</li>
+</ul>
+
+  <div class="note p-4 mb-4 rounded-small red icon-padding">
+    <i class="note-icon fa-solid fa-bolt"></i><p>jsp有交互操作时,路径应设置为<code>/项目名/Servlet名</code></p>
+
+  </div>
+
+  <div class="note p-4 mb-4 rounded-small red icon-padding">
+    <i class="note-icon fa-solid fa-bolt"></i><p>,Servlet中dispatcher跳转到jsp页面时,也要写上<code>/文件夹名/jsp文件名</code>(默认情况.</p>
+
+  </div>
+<p>之前遇到了一个问题，最后自己摸索着突然就搞清楚了。<br>问题就是：新建的动态web项目，发布到tomcat之后:</p>
+<ul>
+<li>jsp可以单独访问</li>
+<li>servlet可以单独访问</li>
+</ul>
+<p><strong>但通过form表单跳转到servlet的类则出现404错误。</strong></p>
+<p>反复研究了很久也没发现解决方案，可能这是个最基础的设置吧，根本没有人解答。</p>
+<p>通过摸索,我发现最重要的一点就是servlet编译好之后生成的类,存放位置十分关键.</p>
+<p>按照默认设置的话,类是存放在build&#x2F;classes文件夹中的,</p>
+<p>但是由于我们建立的jsp文件是存放在web-content文件夹中的，</p>
+<p>所以jsp文件没法找到servlet生成的class文件。</p>
+
+  <div class="note-large red">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>解决办法:</p>
+
+    </div>
+    <div class="notel-content">
+      <p>解决方案就是在build path里面重新设置class的输出文件夹，放到web-inf文件夹下面的classes中,如果没有这个classes文件夹,则要自己新建一个。</p>
+
+    </div>
+  </div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78615827' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tomcat Server</title>
+    <url>/2017/11/01/Tomcat-Server/</url>
+    <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
+<p>tomcat报错:</p>
+
+  <div class="note p-4 mb-4 rounded-small bug description :">
+    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+
+  </div>
+
+<p>打开<code>https://localhost:8080</code>依旧如此</p>
+<p>解决办法:</p>
+<div class="tabs" id="tab-solution"><ul class="nav-tabs"><li class="tab active"><a class="#solution-1">step.1</a></li><li class="tab"><a class="#solution-2">step.2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="solution-1"><ul>
+<li>将服务器从eclipse的配置中删掉,重新添加新的服务器 双击. </li>
+<li>server locations 可选,勾选中间一个.</li>
+</ul>
+<p><strong>如果错误依旧存在 点第二步</strong></p></div><div class="tab-pane" id="solution-2"><p>若把jsp 文件 放到 WebContent 下面的文件夹里面 。</p>
+<p>你的访问路径应该为: <code>localhost:8080/你的项目名称/你的放jsp的文件夹/jsp文件名称.jsp</code></p>
+<p>例子: localhost:8080&#x2F;JSTLTest&#x2F;jsp&#x2F;JSTLTest.jsp</p>
+<p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
+
+
+  <div class="note p-4 mb-4 rounded-small danger">
+    <p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
+
+  </div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78627140' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>
+]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang 汇总</title>
+    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/</url>
+    <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
+<span id="more"></span>
+<h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>问题一解决方案:</li>
+</ul>
+<ol>
+<li>check config file:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<ul>
+<li>如果没有bash_profile就创建</li>
+</ul>
+<ol start="2">
+<li>写入:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/local/go</span><br><span class="line"><span class="built_in">export</span> GOPATH=/usr/local/GO</span><br><span class="line"><span class="comment">#GOPATH可以写自己项目的文件地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$GOROOT</span>/bin:<span class="variable">$GOPATH</span>/bin</span><br></pre></td></tr></table></figure></div></li>
+<li>保存后:<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></div></li>
+<li>check if it works.<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go version </span></span><br><span class="line">go version go1.18 darwin/amd64</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h1 id="学习部分"><a href="#学习部分" class="headerlink" title="学习部分"></a>学习部分</h1><h2 id="const关键字-amp-amp-iota表达式"><a href="#const关键字-amp-amp-iota表达式" class="headerlink" title="const关键字&amp;&amp; iota表达式"></a>const关键字&amp;&amp; iota表达式</h2><ul>
+<li>go 变量声明 ：关键字  + 变量名 +  变量类型</li>
+</ul>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//iota是一个 表达式</span></span><br><span class="line">  BEIJING = <span class="number">10</span> * <span class="literal">iota</span> <span class="comment">//iota = 0</span></span><br><span class="line">  SHNAGHAI, <span class="comment">// iota == 1</span></span><br><span class="line">  SHENZHEN, <span class="comment">// iota == 2</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">  <span class="comment">//批量赋值</span></span><br><span class="line">	a,b = <span class="literal">iota</span> + <span class="number">1</span> , <span class="literal">iota</span> + <span class="number">2</span> <span class="comment">// iota = 0 </span></span><br><span class="line">  c,d <span class="comment">// iota = 1</span></span><br><span class="line">  e,f</span><br><span class="line">  </span><br><span class="line">  g,h = <span class="literal">iota</span> * <span class="number">2</span> , <span class="literal">iota</span> * <span class="number">3</span></span><br><span class="line">  i,k</span><br><span class="line">  l,m</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">const</span> length <span class="type">int</span> = <span class="number">123</span> </span><br><span class="line">  fmt.Println(<span class="string">&quot;beijing = &quot;</span>, BEIJING)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shanghai = &quot;</span>, SHANGHAI)</span><br><span class="line">	fmt.Println(<span class="string">&quot;shenzhen = &quot;</span>, SHENZHEN)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;ab cd ef = &quot;</span>, a, b, c, d, e, f)</span><br><span class="line">	fmt.Println(<span class="string">&quot;gh ik lm = &quot;</span>, g, h, i, k, l, m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">beijing =  0</span><br><span class="line">shanghai =  10</span><br><span class="line">shenzhen =  20</span><br><span class="line">ab <span class="built_in">cd</span> ef =  1 2 2 3 3 4</span><br><span class="line">gh ik lm =  6 9 8 12 10 15</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="GO方法声明和返回值"><a href="#GO方法声明和返回值" class="headerlink" title="GO方法声明和返回值"></a>GO方法声明和返回值</h2><ul>
+<li>关键字 + 方法名 +  返回值类型</li>
+</ul>
+<p>eg  : func   test(args .. )   int </p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;a &quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;b &quot;</span>, b)</span><br><span class="line">	c := <span class="number">11</span></span><br><span class="line">	<span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 匿名形参</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test1</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (<span class="type">int</span>, <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">22</span>, <span class="number">33</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回多个返回值 有形参名称</span></span><br><span class="line"><span class="comment">//或者可以写 func test2(a string, b int) (r1 , r2 int)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">(a <span class="type">string</span>, b <span class="type">int</span>)</span></span> (r1 <span class="type">int</span>, r2 <span class="type">int</span>) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;method name =&quot;</span>, a)</span><br><span class="line">	fmt.Println(<span class="string">&quot;arg int =&quot;</span>, b)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r1 = &quot;</span>, r1)</span><br><span class="line">	fmt.Println(<span class="string">&quot;r2 = &quot;</span>, r2)</span><br><span class="line">	<span class="comment">// 返回值赋值</span></span><br><span class="line">	r1 = <span class="number">44</span></span><br><span class="line">	r2 = <span class="number">55</span></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := test(<span class="string">&quot;123&quot;</span>, <span class="number">512</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;c= &quot;</span>, c)</span><br><span class="line"></span><br><span class="line">	ret1, ret2 := test1(<span class="string">&quot;test1&quot;</span>, <span class="number">1024</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret1 , ret2 :&quot;</span>, ret1, ret2)</span><br><span class="line"></span><br><span class="line">	ret3, ret4 := test2(<span class="string">&quot;test2&quot;</span>, <span class="number">2048</span>)</span><br><span class="line">	fmt.Println(<span class="string">&quot;ret3 , ret4 :&quot;</span>, ret3, ret4)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">a  123</span><br><span class="line">b  512</span><br><span class="line">c=  11</span><br><span class="line">method name = test1</span><br><span class="line">arg int = 1024</span><br><span class="line">ret1 , ret2 : 22 33</span><br><span class="line">method name = test2</span><br><span class="line">arg int = 2048</span><br><span class="line">r1 =  0</span><br><span class="line">r2 =  0</span><br><span class="line">ret3 , ret4 : 44 55</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="go指针"><a href="#go指针" class="headerlink" title="go指针"></a>go指针</h2><p>demo：</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	tmp *<span class="type">int</span> </span><br><span class="line">  q *<span class="type">int</span></span><br><span class="line">  p *<span class="type">int</span></span><br><span class="line">) <span class="comment">//batch 声明</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> a <span class="type">int</span> = <span class="number">10</span></span><br><span class="line">	<span class="keyword">var</span> b <span class="type">int</span> = <span class="number">20</span></span><br><span class="line">	<span class="comment">//指针赋值</span></span><br><span class="line">	p = &amp;a</span><br><span class="line">	q = &amp;b</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//简单指针操作：交换</span></span><br><span class="line">	tmp = p</span><br><span class="line">	p = q</span><br><span class="line">	q = tmp</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;p , q&quot;</span>, *p, *q)</span><br><span class="line">	<span class="comment">//二级指针</span></span><br><span class="line">  <span class="keyword">var</span> (</span><br><span class="line">    dd **<span class="type">int</span></span><br><span class="line">  )</span><br><span class="line">	<span class="keyword">var</span> qq *<span class="type">int</span></span><br><span class="line">	qq = &amp;a</span><br><span class="line">	dd = &amp;qq</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;qq:&quot;</span>, *qq)</span><br><span class="line">	fmt.Println(<span class="string">&quot;dd:&quot;</span>, **dd)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>输出：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">p , q 10 20</span><br><span class="line">p , q 20 10</span><br><span class="line">qq: 10</span><br><span class="line"><span class="built_in">dd</span>: 10</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="defer-关键字"><a href="#defer-关键字" class="headerlink" title="defer 关键字"></a>defer 关键字</h2><ul>
+<li>return和defer 的优先级 demo：</li>
+</ul>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f1&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;f3&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Who_Is_First_Test</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> defer_call()</span><br><span class="line">  <span class="keyword">return</span> return_call()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">defer_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">return_call</span><span class="params">()</span></span> <span class="type">int</span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">&quot;defer func call&quot;</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">mian</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end1&quot;</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">&quot;main end2)</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	defer f1()</span></span><br><span class="line"><span class="string">	defer f2()</span></span><br><span class="line"><span class="string">	defer f3()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output1 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>main body output2 <span class="string">&quot;)</span></span><br><span class="line"><span class="string">	fmt.Println(&quot;</span>whos is first ?<span class="string">&quot; , Who_Is_First_Test())</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">main body output1 </span><br><span class="line">main body output2 </span><br><span class="line">return func call</span><br><span class="line">defer func call</span><br><span class="line">Who is first? 1</span><br><span class="line">f3</span><br><span class="line">f2</span><br><span class="line">f1</span><br><span class="line">main end2</span><br><span class="line">main end1</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>Language</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+        <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginxConfInDocker</title>
+    <url>/2022/06/14/nginxConfInDocker/</url>
+    <content><![CDATA[<p>一些配置的备份罢了</p>
+<span id="more"></span>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure></div>
+<!-- end -->]]></content>
+      <categories>
+        <category>Config</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis的java客户端</title>
+    <url>/2022/11/01/redis%E7%9A%84java%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
+    <content><![CDATA[<h3 id="配合官方文档食用更佳"><a href="#配合官方文档食用更佳" class="headerlink" title="配合官方文档食用更佳"></a>配合官方文档食用更佳</h3><ul>
+<li>rediesson（<a class="link"   href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95" >官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）<span id="more"></span></li>
+</ul>
+<p>（逃离繁杂的加锁解锁操作，把精力放在业务功能实现上）</p>
+<p>单服务器下sync(this)在本地加对象锁即可。</p>
+<p>分布式情况略复杂</p>
+<ul>
+<li><p>缓存穿透（大量访问不存在的key，缓存好像不存在）</p>
+<p>（1）布隆过滤器</p>
+</li>
+<li><p>缓存雪崩（多个key到期同时失效，db压力大甚至服务器宕机）</p>
+<p>加入随机时间（但实际开发中不需要 因为业务功能实现需要时间 再加随机时间可能弄巧成拙恰好一起到期）</p>
+<ul>
+<li>解决：</li>
+</ul>
+<p>（1）分库分表读写分离</p>
+<p>（2）熔断降级（达到流量阈值打回去 显示系统拥挤等）</p>
+<p>（3）redis集群（弱一致性更常用些）</p>
+</li>
+<li><p>缓存击穿（单个热点key过期时间到）</p>
+<p>（1）热点数据永不失效</p>
+<p>（2）互斥锁</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/imgs/redis_distribute.svg"
+                      alt="redis案例"
+                ></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sticky on top</title>
+    <url>/2023/04/07/sticky-on-top/</url>
+    <content><![CDATA[<p>置顶文章来了我的老babe们。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>windows下多版本jdk管理踩坑</title>
+    <url>/2024/11/17/windows%E4%B8%8B%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E7%AE%A1%E7%90%86%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近需要搞一个在Windows下多版本的java 环境（别问问就是垃圾公司用的win）</p>
+<p>自己有个项目需要打包用的jdk11</p>
+<p>打包时候报错 无法识别的版本:11</p>
+<p>现在想从1.8 切换到 11（下载好了）</p>
+<p>求助了GPT 检查配置并重启也无果</p>
+<p>最后尝试更改path环境变量优先级成功</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置:"></a>配置:</h2><ol>
+<li>java版本及配置：</li>
+</ol>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">where</span> java</span><br><span class="line"></span><br><span class="line">C:\Program File\Java\jdk1.8xxxxxx\bin\java.exe</span><br><span class="line">C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>其中 JAVA11_HOME 和 JAVA8_HOME 分别是两个系统变量。<br>再创建一个新的 JAVA_HOME : <code>%JAVA11_HOME%</code> 或者 <code>%JAVA8_HOME%</code>来引用当前是哪个环境。</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>win + r -&gt; 输入regedit</p>
+<p>找到：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Java Soft\Java Development Kit</span><br></pre></td></tr></table></figure></div>
+
+<p>发现 Current Version的值依旧是1.8</p>
+<p>进一步验证了刚才就是环境变量没有生效</p>
+<ol start="4">
+<li>问题线索：</li>
+</ol>
+<p>我发现在bash终端临时设置JAVA_HOME变量是可以的：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br><span class="line"><span class="built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%</span><br><span class="line"><span class="built_in">echo</span> %JAVA_HOME%</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
+
+<p>这就说明是环境变量没有生效。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>尝试重启无效那说明就是加载环境变量的时候有问题<br>在配置环境的时候会在 path 中配置：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>尝试把 path 调整到前面确保优先级高于其他条目。</li>
+</ul>
+<p>于是我尝试放在了 xxx&#x2F;system32后面（尽量不要影响系统环境变量的加载）。</p>
+<p>重新打开cmd or bash终端</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
+
+<p>成功切换到11</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的问题提醒我，在配置多版本JDK时，不仅要确保<code>JAVA_HOME</code>等环境变量设置正确，还要关注<code>PATH</code>环境变量的优先级问题。通过这次的经历(cai keng)，我对环境变量的配置和管理有了更深的理解(tu cao).</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>服务推荐</title>
+    <url>/2022/04/08/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3%E7%9A%84idea%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>没x用的学术垃圾产出</p>
+<span id="more"></span>
+
+<h3 id="文献标题-Compatibility-Aware-Web-API-Recommendation-for-MashupCreation-via-Textual-Description-Mining"><a href="#文献标题-Compatibility-Aware-Web-API-Recommendation-for-MashupCreation-via-Textual-Description-Mining" class="headerlink" title="文献标题: Compatibility-Aware Web API Recommendation for MashupCreation via Textual Description Mining"></a>文献标题: Compatibility-Aware Web API Recommendation for MashupCreation via Textual Description Mining</h3><ul>
+<li>Qi L, Song H, Zhang X, et al. Compatibility-aware web api recommendation for mashup creation via textual description mining[J]. ACM Transactions on Multimidia Computing Communications and Applications, 2021, 17(1s): 1-19.</li>
+</ul>
+<h3 id="报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises"><a href="#报告文章-Manufacturing-service-recommendation-method-toward-industrial-internet-platform-considering-the-cooperative-relationship-among-enterprises" class="headerlink" title="报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises"></a>报告文章: Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises</h3><ul>
+<li>Wang, Lei, et al. “Manufacturing service recommendation method toward industrial internet platform considering the cooperative relationship among enterprises.” Expert Systems with Applications 192 (2022): 116391.</li>
+</ul>
+<!-- more -->
+
+<p>初步构思：</p>
+<ol>
+<li>   服务和任务的调用关系 (二部图) -&gt; 迭代出相似度矩阵</li>
+</ol>
+<p>任意服务和服务之间的相似度SR(包括不频繁项目的相似度)可以由此计算 :</p>
+<p>FP-growth -&gt; 服务组合中服务的频繁项目<br>(可以是不同服务组合)</p>
+<ul>
+<li>方法 : 不同服务组合中的服务之间的相似度:<br>有如下几种情况:<br>组合A和组合B的服务历史上协作过 且都是频繁项<br>组合A和组合B的服务历史上协作过 部分是频繁项<br>组合A和组合B的服务部分在历史中协作过 协作的过的部分服务是频繁项<br>组合A和组合B的服务部分在历史中协作过 都不是频繁项<br>组合A和组合B的服务都没有在历史中协作过 部分频繁项<br>组合A和组合B的服务都没有在历史中协作过 没有频繁项</li>
+</ul>
+<p>评价算法: 内部频繁项服务的个数 + 相似度 评价服务组合之间的相似度<br>每两个服务组合分别遍历 是频繁项权重就直接 +1 , 不频繁项目取跟组合中频繁项目的最大相似度 (&lt;1) &#x2F; 两个服务组合中的所有服务个数.</p>
+<ol start="2">
+<li>   再去结合 MOEA 可以找出高Qos的(在帕累托前沿的) + 高内联协作度服务组合</li>
+</ol>
+]]></content>
+      <categories>
+        <category>学术垃圾</category>
+      </categories>
+      <tags>
+        <tag>服务推荐</tag>
+        <tag>随笔</tag>
+        <tag>推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>遗传算法</title>
+    <url>/2022/06/08/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>paper上的算法…</p>
+<span id="more"></span>
+<h5 id="要素："><a href="#要素：" class="headerlink" title="要素："></a>要素：</h5><ol>
+<li><p>适应值：区分染色体优劣。</p>
+</li>
+<li><p>评估函数evaluation function：计算适应值。</p>
+</li>
+<li><p>选择算子selection ：按照规则进行选择，得到父代种群。</p>
+</li>
+<li><p>交配算子crossover：交换，产生新个体，子代染色体取代父代进入新种群</p>
+</li>
+<li><p>变异算子mutation：使新种群进行小概率变异，染色体发生变异的基因改变数值，得到新染色体。经过变异的新种群代替原有群体进入下一代进化。</p>
+</li>
+</ol>
+<h5 id="流程："><a href="#流程：" class="headerlink" title="流程："></a>流程：</h5><ol>
+<li>编码</li>
+<li>初始化种群</li>
+<li>适应值评价</li>
+<li>选择种群</li>
+<li>种群交配</li>
+<li>种群变异</li>
+</ol>
+<h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><p>编码方式影响交配crossover和变异 mutation操作等。</p>
+]]></content>
+      <categories>
+        <category>学术垃圾</category>
+      </categories>
+      <tags>
+        <tag>服务推荐</tag>
+        <tag>推荐系统</tag>
+        <tag>遗传算法</tag>
+      </tags>
+  </entry>
+</search>
