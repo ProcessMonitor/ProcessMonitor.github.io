@@ -25,56 +25,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于ElasticSearch的运行Bug</title>
-    <url>/2022/11/29/ElasticSearch/</url>
-    <content><![CDATA[<p>info:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
-<span id="more"></span>
-<p> <code>原因:</code></p>
-<ul>
-<li>文件描述符fd太少:</li>
-</ul>
-<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
-<p><em>(adam是本地用户,替换你自己的)</em></p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
-
-<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
-
-<p>找到文件中的如下内容:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
-
-<p>修改为:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
-
-<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
-
-<p>并执行:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
-
-<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
-<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
-<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
-<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
-<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
-<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
-<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
-]]></content>
-      <categories>
-        <category>ElasticSearch</category>
-      </categories>
-      <tags>
-        <tag>ElasticSearch</tag>
-        <tag>ES</tag>
-        <tag>bug</tag>
-        <tag>分布式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Github设置ssh免密登陆并配置hexo</title>
     <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
     <content><![CDATA[
@@ -138,6 +88,56 @@
         <tag>hexo</tag>
         <tag>github</tag>
         <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于ElasticSearch的运行Bug</title>
+    <url>/2022/11/29/ElasticSearch/</url>
+    <content><![CDATA[<p>info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
+<span id="more"></span>
+<p> <code>原因:</code></p>
+<ul>
+<li>文件描述符fd太少:</li>
+</ul>
+<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
+<p><em>(adam是本地用户,替换你自己的)</em></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
+
+<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
+
+<p>找到文件中的如下内容:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
+
+<p>修改为:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
+
+<p>并执行:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
+
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
+<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
+<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
+<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
+<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
+<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
+<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
+]]></content>
+      <categories>
+        <category>ElasticSearch</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -284,6 +284,14 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring基础一篇就够了</title>
+    <url>/2023/08/06/Spring%E5%9F%BA%E7%A1%80%E4%B8%80%E7%AF%87%E5%B0%B1%E5%A4%9F%E4%BA%86/</url>
+    <content><![CDATA[<p>目标：<br>理解IoC （inverse of control）&#x2F;DI （dependency injection）<br>理解 AOP（面向切面编程）</p>
+<p>Spring是什么？（不是重点一笔带过）<br>是软件层面的框架，无特定场景，是一个管理者形象，企业级开发框架，让企业级应用更快开发，优势就是让企业级项目可以做分层架构，开发者可以选择组件模块化开发。<br>目前已经有各个不同层的解决方案，比如：<br>MVC：有strust2 SpringMVC<br>ORMapping：Hibernate Mybatis Spring Data<br>微服务分布式架构：Spring Cloud<br>它的两大核心就是 IoC &#x2F; AOP</p>
+<p>企业级项目一般： 用户量大 并发量高 功能模块多又复杂；性能、安全性要求高；需求变化快，业务又复杂。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Suit 80 Owlab</title>
     <url>/2023/05/02/Suit%2080%20Owlab/</url>
     <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
@@ -354,14 +362,6 @@
         <tag>mechanical keyboard</tag>
         <tag>customize</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Spring基础一篇就够了</title>
-    <url>/2023/08/06/Spring%E5%9F%BA%E7%A1%80%E4%B8%80%E7%AF%87%E5%B0%B1%E5%A4%9F%E4%BA%86/</url>
-    <content><![CDATA[<p>目标：<br>理解IoC （inverse of control）&#x2F;DI （dependency injection）<br>理解 AOP（面向切面编程）</p>
-<p>Spring是什么？（不是重点一笔带过）<br>是软件层面的框架，无特定场景，是一个管理者形象，企业级开发框架，让企业级应用更快开发，优势就是让企业级项目可以做分层架构，开发者可以选择组件模块化开发。<br>目前已经有各个不同层的解决方案，比如：<br>MVC：有strust2 SpringMVC<br>ORMapping：Hibernate Mybatis Spring Data<br>微服务分布式架构：Spring Cloud<br>它的两大核心就是 IoC &#x2F; AOP</p>
-<p>企业级项目一般： 用户量大 并发量高 功能模块多又复杂；性能、安全性要求高；需求变化快，业务又复杂。</p>
-]]></content>
   </entry>
   <entry>
     <title>Tomcat Server</title>
@@ -602,11 +602,15 @@
 </li>
 <li><p>企业级项目怎么传递TraceId</p>
 </li>
-<li><p>rpc注册和发现流程</p>
+<li><p>rpc注册和发现流程 (聊很久)</p>
 </li>
 <li><p>线程池的核心参数 任务的执行流程？</p>
 </li>
+<li><p>算法lc 61 旋转链表</p>
+</li>
 </ol>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">rotateRight</span><span class="params">(ListNode head, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理边界情况</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span> || head.next == <span class="literal">null</span> || k == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 计算链表长度</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">tail</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">while</span> (tail.next != <span class="literal">null</span>) &#123;</span><br><span class="line">            tail = tail.next;</span><br><span class="line">            length++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 对k取模，避免不必要的旋转</span></span><br><span class="line">        k = k % length;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 找到新的尾节点（第length-k个节点）</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newTail</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; length - k; i++) &#123;</span><br><span class="line">            newTail = newTail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 重新连接链表</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newHead</span> <span class="operator">=</span> newTail.next;</span><br><span class="line">        newTail.next = <span class="literal">null</span>;</span><br><span class="line">        tail.next = head;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
 <h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><ol>
 <li><p>谈谈你对dubbo的理解</p>
 </li>

@@ -18,15 +18,15 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="一面 自我介绍  如何保证幂等性  企业级项目怎么传递TraceId  rpc注册和发现流程  线程池的核心参数 任务的执行流程？   二面 谈谈你对dubbo的理解  dubbo中的consumer 和 provider 的调用流程 什么路径？  dubbo中的比较核心的抽象接口是哪些？  string stringbuffer stringbuilder的区别  string 和string">
+        <meta name="description" content="一面 自我介绍  如何保证幂等性  企业级项目怎么传递TraceId  rpc注册和发现流程 (聊很久)  线程池的核心参数 任务的执行流程？  算法lc 61 旋转链表   123456789101112131415161718192021222324252627282930313233343536373839404142434445&#x2F;** * Definition for singly-lin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="xTransfer三面凉经">
 <meta property="og:url" content="http://example.com/2025/10/19/xTransfer%E4%B8%89%E9%9D%A2%E5%87%89%E7%BB%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一面 自我介绍  如何保证幂等性  企业级项目怎么传递TraceId  rpc注册和发现流程  线程池的核心参数 任务的执行流程？   二面 谈谈你对dubbo的理解  dubbo中的consumer 和 provider 的调用流程 什么路径？  dubbo中的比较核心的抽象接口是哪些？  string stringbuffer stringbuilder的区别  string 和string">
+<meta property="og:description" content="一面 自我介绍  如何保证幂等性  企业级项目怎么传递TraceId  rpc注册和发现流程 (聊很久)  线程池的核心参数 任务的执行流程？  算法lc 61 旋转链表   123456789101112131415161718192021222324252627282930313233343536373839404142434445&#x2F;** * Definition for singly-lin">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-19T11:08:36.000Z">
-<meta property="article:modified_time" content="2025-10-19T11:26:51.136Z">
+<meta property="article:modified_time" content="2025-10-19T11:30:04.715Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
     
@@ -553,8 +553,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-10-19 19:26:51</span>
-            <span class="mobile">2025-10-19 19:26:51</span>
+            <span class="desktop">2025-10-19 19:30:04</span>
+            <span class="mobile">2025-10-19 19:30:04</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -565,12 +565,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>608 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>781 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>3 Mins</span>
         </span>
     
     
@@ -596,11 +596,15 @@
 </li>
 <li><p>企业级项目怎么传递TraceId</p>
 </li>
-<li><p>rpc注册和发现流程</p>
+<li><p>rpc注册和发现流程 (聊很久)</p>
 </li>
 <li><p>线程池的核心参数 任务的执行流程？</p>
 </li>
+<li><p>算法lc 61 旋转链表</p>
+</li>
 </ol>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">rotateRight</span><span class="params">(ListNode head, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理边界情况</span></span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">null</span> || head.next == <span class="literal">null</span> || k == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 计算链表长度</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">tail</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">while</span> (tail.next != <span class="literal">null</span>) &#123;</span><br><span class="line">            tail = tail.next;</span><br><span class="line">            length++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 对k取模，避免不必要的旋转</span></span><br><span class="line">        k = k % length;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 找到新的尾节点（第length-k个节点）</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newTail</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; length - k; i++) &#123;</span><br><span class="line">            newTail = newTail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 重新连接链表</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">newHead</span> <span class="operator">=</span> newTail.next;</span><br><span class="line">        newTail.next = <span class="literal">null</span>;</span><br><span class="line">        tail.next = head;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
 <h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><ol>
 <li><p>谈谈你对dubbo的理解</p>
 </li>
@@ -652,7 +656,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-10-19 19:26:51
+                    :</strong> 2025-10-19 19:30:04
             </li>
         
         <li>
@@ -805,7 +809,7 @@
                     </span>
                     
                         <span>
-                            7.5k words in total
+                            7.6k words in total
                         </span>
                     
                 </p>
