@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ES+Kibana整合bug</title>
-    <url>/2023/07/29/ES-Kibana%E6%95%B4%E5%90%88/</url>
-    <content><![CDATA[<p>console info:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
-
-<p>突然意识到Document 是ES中的索引库啊，那说明是索引库版本不一致咯前面的 task:apm-telementry 等等应该是索引库的名字 我给他删除了一下试了试，成功了。<br>但是如果是实际的开发工作中遇到这种情况，也不能删掉索引库的情况，该怎么办呢？</p>
-<p>所以我来看官网了。</p>
-<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control" >如何处理版本冲突 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control" >乐观并发控制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>也算是从这个一个小bug 里面学到了如何检索自己的问题 如何排检索优先级：</p>
-<p>官方文档 &gt;&gt; 该项目的Github issue &gt; 各开源论坛 </p>
-<p>今天先写到这 先不排版了。</p>
-]]></content>
-      <categories>
-        <category>ElasticSearch</category>
-      </categories>
-      <tags>
-        <tag>ElasticSearch</tag>
-        <tag>ES</tag>
-        <tag>Kibana</tag>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于ElasticSearch的运行Bug</title>
     <url>/2022/11/29/ElasticSearch/</url>
     <content><![CDATA[<p>info:</p>
@@ -75,69 +51,50 @@
       </tags>
   </entry>
   <entry>
-    <title>Github设置ssh免密登陆并配置hexo</title>
-    <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
-    <content><![CDATA[
-  <div class="note-large blue">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <p>deploy的时候时候报错:</p>
+    <title>ES+Kibana整合bug</title>
+    <url>/2023/07/29/ES-Kibana%E6%95%B4%E5%90%88/</url>
+    <content><![CDATA[<p>console info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
 
-    </div>
-    <div class="notel-content">
-      <ul>
-<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
-</ul>
-
-    </div>
-  </div>
-<!-- more -->
-
-
-<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><hr>
-<div class="tabs" id="tab-ssh-gen-setting"><ul class="nav-tabs"><li class="tab active"><a class="#ssh-gen-setting-1">step 0</a></li><li class="tab"><a class="#ssh-gen-setting-2">step 1</a></li><li class="tab"><a class="#ssh-gen-setting-3">step 2</a></li><li class="tab"><a class="#ssh-gen-setting-4">step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ssh-gen-setting-1"><p><strong>Step 0.生成密钥对</strong></p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure></div>
-
-<p>· 删除已经存在的 .ssh 目录(如果有)</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br></pre></td></tr></table></figure></div>
-<p>· 生成密钥对.</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>遇到提示enter就OK(也可以自己命名密钥名称,提取密码等,这里默认)</li>
-</ul></div><div class="tab-pane" id="ssh-gen-setting-2"><p><strong>Step 1.进入本地ssh目录</strong></p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>此目录下的 id_rsa 就是你的私钥(要保存好 ❌不要泄露❌  )</li>
-</ul></div><div class="tab-pane" id="ssh-gen-setting-3"><p><strong>Step 2. 查看id_rsa.pub （公钥</strong></p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure></div>
-
-<p>复制下来(所有)</p></div><div class="tab-pane" id="ssh-gen-setting-4"><p><strong>Step 3.GitHub Account Setting</strong><br>· 登录 GitHub，点击用户头像→Settings→SSHandGPG keys<br>· 点击 New SSH Key 复制到Key 文本框中 Title 随便起名<br>· Add SSH Key 就可以了</p></div></div></div>
-
-<hr>
-<ul>
-<li>接下来是 hexo 配置</li>
-</ul>
-<div class="tabs" id="tab-hexo-setting"><ul class="nav-tabs"><li class="tab active"><a class="#hexo-setting-1">setp 1</a></li><li class="tab"><a class="#hexo-setting-2">done</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-setting-1"><p>验证下是否配置是否生效:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
-
-<p>显示successfully xxxx 就OK</p></div><div class="tab-pane" id="hexo-setting-2"><p>最后配置_config.yml:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></div></div></div></div>
-
-
-  <div class="note p-4 mb-4 rounded-small danger">
-    <p>注意: 用户名是你 github的名字 不是之前的登录Username and 看好你的git默认的branch是什么</p>
-
-  </div>
+<p>突然意识到Document 是ES中的索引库啊，那说明是索引库版本不一致咯前面的 task:apm-telementry 等等应该是索引库的名字 我给他删除了一下试了试，成功了。<br>但是如果是实际的开发工作中遇到这种情况，也不能删掉索引库的情况，该怎么办呢？</p>
+<p>所以我来看官网了。</p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control" >如何处理版本冲突 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control" >乐观并发控制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>也算是从这个一个小bug 里面学到了如何检索自己的问题 如何排检索优先级：</p>
+<p>官方文档 &gt;&gt; 该项目的Github issue &gt; 各开源论坛 </p>
+<p>今天先写到这 先不排版了。</p>
 ]]></content>
       <categories>
-        <category>Config</category>
+        <category>ElasticSearch</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
-        <tag>github</tag>
-        <tag>ssh</tag>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>Kibana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lambda 表达式合集</title>
+    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<p>来自java8的“新”特性…</p>
+<span id="more"></span>
+<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<!-- more -->
+<p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure></div>
+
+<p>双列集合: 转换成单列集合在创建流(就是套娃)</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+      <categories>
+        <category>Language</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>lambda</tag>
       </tags>
   </entry>
   <entry>
@@ -207,26 +164,123 @@
 ]]></content>
   </entry>
   <entry>
-    <title>lambda 表达式合集</title>
-    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<p>来自java8的“新”特性…</p>
-<span id="more"></span>
-<h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Obj</span>&#123;</span><br><span class="line">	propertie1;</span><br><span class="line">	propertie2;</span><br><span class="line">	...etc...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;	</span><br><span class="line">	List&lt;obj.class&gt; listObj = getList();</span><br><span class="line">	Stream&lt;obj.class&gt; streamObj = listObj.stream();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+    <title>Github设置ssh免密登陆并配置hexo</title>
+    <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
+    <content><![CDATA[
+  <div class="note-large blue">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>deploy的时候时候报错:</p>
+
+    </div>
+    <div class="notel-content">
+      <ul>
+<li>As previously announced, starting on August 13, 2021, at 09:00 PST, we will no longer accept account passwords when authenticating Git operations on GitHub.com. Instead, token-based authentication (for example, personal access, OAuth, SSH Key, or GitHub App installation token) will be required for all authenticated Git operations.</li>
+</ul>
+
+    </div>
+  </div>
 <!-- more -->
-<p>数组: Arrays.stream(数组对象) 或者使用 Stream.of创建</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream1 = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure></div>
 
-<p>双列集合: 转换成单列集合在创建流(就是套娃)</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">       map.put(<span class="string">&quot;test1 &quot;</span> , <span class="number">15</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test2 &quot;</span> , <span class="number">16</span>);</span><br><span class="line">       map.put(<span class="string">&quot;test3 &quot;</span> , <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//把map 双列集合转换为单列集合</span></span><br><span class="line">       Set&lt;Map.Entry&lt;String, Integer&gt;&gt; entrySet = map.entrySet();</span><br><span class="line"></span><br><span class="line">       entrySet.stream().filter(<span class="keyword">new</span> <span class="title class_">Predicate</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">test</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               <span class="keyword">return</span> stringIntegerEntry.getValue()&gt;<span class="number">15</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).forEach(<span class="keyword">new</span> <span class="title class_">Consumer</span>&lt;Map.Entry&lt;String, Integer&gt;&gt;() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">accept</span><span class="params">(Map.Entry&lt;String, Integer&gt; stringIntegerEntry)</span> &#123;</span><br><span class="line">               System.out.println(stringIntegerEntry.getKey() + <span class="string">&quot;===&quot;</span> + stringIntegerEntry.getValue());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="1-1-2-中间操作"><a href="#1-1-2-中间操作" class="headerlink" title="1.1.2 中间操作"></a>1.1.2 中间操作</h3>]]></content>
+<p>大致意思是:<br>密码验证于2021年8月13日不再支持，不能再用密码方式去提交代码。请用使用 personal access token 替代。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法:"></a>解决方法:</h3><hr>
+<div class="tabs" id="tab-ssh-gen-setting"><ul class="nav-tabs"><li class="tab active"><a class="#ssh-gen-setting-1">step 0</a></li><li class="tab"><a class="#ssh-gen-setting-2">step 1</a></li><li class="tab"><a class="#ssh-gen-setting-3">step 2</a></li><li class="tab"><a class="#ssh-gen-setting-4">step 3</a></li></ul><div class="tab-content"><div class="tab-pane active" id="ssh-gen-setting-1"><p><strong>Step 0.生成密钥对</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure></div>
+
+<p>· 删除已经存在的 .ssh 目录(如果有)</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r .ssh/</span><br></pre></td></tr></table></figure></div>
+<p>· 生成密钥对.</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C *你的github邮箱地址*</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>遇到提示enter就OK(也可以自己命名密钥名称,提取密码等,这里默认)</li>
+</ul></div><div class="tab-pane" id="ssh-gen-setting-2"><p><strong>Step 1.进入本地ssh目录</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh/</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>此目录下的 id_rsa 就是你的私钥(要保存好 ❌不要泄露❌  )</li>
+</ul></div><div class="tab-pane" id="ssh-gen-setting-3"><p><strong>Step 2. 查看id_rsa.pub （公钥</strong></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub </span><br></pre></td></tr></table></figure></div>
+
+<p>复制下来(所有)</p></div><div class="tab-pane" id="ssh-gen-setting-4"><p><strong>Step 3.GitHub Account Setting</strong><br>· 登录 GitHub，点击用户头像→Settings→SSHandGPG keys<br>· 点击 New SSH Key 复制到Key 文本框中 Title 随便起名<br>· Add SSH Key 就可以了</p></div></div></div>
+
+<hr>
+<ul>
+<li>接下来是 hexo 配置</li>
+</ul>
+<div class="tabs" id="tab-hexo-setting"><ul class="nav-tabs"><li class="tab active"><a class="#hexo-setting-1">setp 1</a></li><li class="tab"><a class="#hexo-setting-2">done</a></li></ul><div class="tab-content"><div class="tab-pane active" id="hexo-setting-1"><p>验证下是否配置是否生效:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></div>
+
+<p>显示successfully xxxx 就OK</p></div><div class="tab-pane" id="hexo-setting-2"><p>最后配置_config.yml:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:你的用户名/仓库名.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></div></div></div></div>
+
+
+  <div class="note p-4 mb-4 rounded-small danger">
+    <p>注意: 用户名是你 github的名字 不是之前的登录Username and 看好你的git默认的branch是什么</p>
+
+  </div>
+]]></content>
       <categories>
-        <category>Language</category>
+        <category>Config</category>
       </categories>
       <tags>
-        <tag>java</tag>
-        <tag>lambda</tag>
+        <tag>hexo</tag>
+        <tag>github</tag>
+        <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Route Bug</title>
+    <url>/2017/11/23/Route-Bug/</url>
+    <content><![CDATA[<p>跟上篇文章一样也是很多java web新手都遇到的错误:<br><code>jsp跳转到Servlet 出现404路径错误:</code></p>
+<!-- 
+  <div class="note p-4 mb-4 rounded-small bug description :">
+    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+
+  </div> -->
+
+<ul>
+<li>检查:</li>
+</ul>
+
+  <div class="note p-4 mb-4 rounded-small red icon-padding">
+    <i class="note-icon fa-solid fa-bolt"></i><p>jsp有交互操作时,路径应设置为<code>/项目名/Servlet名</code></p>
+
+  </div>
+
+  <div class="note p-4 mb-4 rounded-small red icon-padding">
+    <i class="note-icon fa-solid fa-bolt"></i><p>,Servlet中dispatcher跳转到jsp页面时,也要写上<code>/文件夹名/jsp文件名</code>(默认情况.</p>
+
+  </div>
+<p>之前遇到了一个问题，最后自己摸索着突然就搞清楚了。<br>问题就是：新建的动态web项目，发布到tomcat之后:</p>
+<ul>
+<li>jsp可以单独访问</li>
+<li>servlet可以单独访问</li>
+</ul>
+<p><strong>但通过form表单跳转到servlet的类则出现404错误。</strong></p>
+<p>反复研究了很久也没发现解决方案，可能这是个最基础的设置吧，根本没有人解答。</p>
+<p>通过摸索,我发现最重要的一点就是servlet编译好之后生成的类,存放位置十分关键.</p>
+<p>按照默认设置的话,类是存放在build&#x2F;classes文件夹中的,</p>
+<p>但是由于我们建立的jsp文件是存放在web-content文件夹中的，</p>
+<p>所以jsp文件没法找到servlet生成的class文件。</p>
+
+  <div class="note-large red">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>解决办法:</p>
+
+    </div>
+    <div class="notel-content">
+      <p>解决方案就是在build path里面重新设置class的输出文件夹，放到web-inf文件夹下面的classes中,如果没有这个classes文件夹,则要自己新建一个。</p>
+
+    </div>
+  </div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78615827' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -236,6 +290,43 @@
 <p>Spring是什么？（不是重点一笔带过）<br>是软件层面的框架，无特定场景，是一个管理者形象，企业级开发框架，让企业级应用更快开发，优势就是让企业级项目可以做分层架构，开发者可以选择组件模块化开发。<br>目前已经有各个不同层的解决方案，比如：<br>MVC：有strust2 SpringMVC<br>ORMapping：Hibernate Mybatis Spring Data<br>微服务分布式架构：Spring Cloud<br>它的两大核心就是 IoC &#x2F; AOP</p>
 <p>企业级项目一般： 用户量大 并发量高 功能模块多又复杂；性能、安全性要求高；需求变化快，业务又复杂。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Tomcat Server</title>
+    <url>/2017/11/01/Tomcat-Server/</url>
+    <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
+<p>tomcat报错:</p>
+
+  <div class="note p-4 mb-4 rounded-small bug description :">
+    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
+
+  </div>
+
+<p>打开<code>https://localhost:8080</code>依旧如此</p>
+<p>解决办法:</p>
+<div class="tabs" id="tab-solution"><ul class="nav-tabs"><li class="tab active"><a class="#solution-1">step.1</a></li><li class="tab"><a class="#solution-2">step.2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="solution-1"><ul>
+<li>将服务器从eclipse的配置中删掉,重新添加新的服务器 双击. </li>
+<li>server locations 可选,勾选中间一个.</li>
+</ul>
+<p><strong>如果错误依旧存在 点第二步</strong></p></div><div class="tab-pane" id="solution-2"><p>若把jsp 文件 放到 WebContent 下面的文件夹里面 。</p>
+<p>你的访问路径应该为: <code>localhost:8080/你的项目名称/你的放jsp的文件夹/jsp文件名称.jsp</code></p>
+<p>例子: localhost:8080&#x2F;JSTLTest&#x2F;jsp&#x2F;JSTLTest.jsp</p>
+<p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
+
+
+  <div class="note p-4 mb-4 rounded-small danger">
+    <p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
+
+  </div>
+
+<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78627140' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>
+]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Tomcat</tag>
+      </tags>
   </entry>
   <entry>
     <title>Suit 80 Owlab</title>
@@ -307,97 +398,6 @@
       <tags>
         <tag>mechanical keyboard</tag>
         <tag>customize</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Route Bug</title>
-    <url>/2017/11/23/Route-Bug/</url>
-    <content><![CDATA[<p>跟上篇文章一样也是很多java web新手都遇到的错误:<br><code>jsp跳转到Servlet 出现404路径错误:</code></p>
-<!-- 
-  <div class="note p-4 mb-4 rounded-small bug description :">
-    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
-
-  </div> -->
-
-<ul>
-<li>检查:</li>
-</ul>
-
-  <div class="note p-4 mb-4 rounded-small red icon-padding">
-    <i class="note-icon fa-solid fa-bolt"></i><p>jsp有交互操作时,路径应设置为<code>/项目名/Servlet名</code></p>
-
-  </div>
-
-  <div class="note p-4 mb-4 rounded-small red icon-padding">
-    <i class="note-icon fa-solid fa-bolt"></i><p>,Servlet中dispatcher跳转到jsp页面时,也要写上<code>/文件夹名/jsp文件名</code>(默认情况.</p>
-
-  </div>
-<p>之前遇到了一个问题，最后自己摸索着突然就搞清楚了。<br>问题就是：新建的动态web项目，发布到tomcat之后:</p>
-<ul>
-<li>jsp可以单独访问</li>
-<li>servlet可以单独访问</li>
-</ul>
-<p><strong>但通过form表单跳转到servlet的类则出现404错误。</strong></p>
-<p>反复研究了很久也没发现解决方案，可能这是个最基础的设置吧，根本没有人解答。</p>
-<p>通过摸索,我发现最重要的一点就是servlet编译好之后生成的类,存放位置十分关键.</p>
-<p>按照默认设置的话,类是存放在build&#x2F;classes文件夹中的,</p>
-<p>但是由于我们建立的jsp文件是存放在web-content文件夹中的，</p>
-<p>所以jsp文件没法找到servlet生成的class文件。</p>
-
-  <div class="note-large red">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <p>解决办法:</p>
-
-    </div>
-    <div class="notel-content">
-      <p>解决方案就是在build path里面重新设置class的输出文件夹，放到web-inf文件夹下面的classes中,如果没有这个classes文件夹,则要自己新建一个。</p>
-
-    </div>
-  </div>
-
-<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78615827' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>]]></content>
-      <categories>
-        <category>Server</category>
-      </categories>
-      <tags>
-        <tag>Servlet</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Tomcat Server</title>
-    <url>/2017/11/01/Tomcat-Server/</url>
-    <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
-<p>tomcat报错:</p>
-
-  <div class="note p-4 mb-4 rounded-small bug description :">
-    <p>The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.</p>
-
-  </div>
-
-<p>打开<code>https://localhost:8080</code>依旧如此</p>
-<p>解决办法:</p>
-<div class="tabs" id="tab-solution"><ul class="nav-tabs"><li class="tab active"><a class="#solution-1">step.1</a></li><li class="tab"><a class="#solution-2">step.2</a></li></ul><div class="tab-content"><div class="tab-pane active" id="solution-1"><ul>
-<li>将服务器从eclipse的配置中删掉,重新添加新的服务器 双击. </li>
-<li>server locations 可选,勾选中间一个.</li>
-</ul>
-<p><strong>如果错误依旧存在 点第二步</strong></p></div><div class="tab-pane" id="solution-2"><p>若把jsp 文件 放到 WebContent 下面的文件夹里面 。</p>
-<p>你的访问路径应该为: <code>localhost:8080/你的项目名称/你的放jsp的文件夹/jsp文件名称.jsp</code></p>
-<p>例子: localhost:8080&#x2F;JSTLTest&#x2F;jsp&#x2F;JSTLTest.jsp</p>
-<p>解释: 第一个JSTLTest为项目名称,jsp为WebContent下的文件夹,专门存放jsp文件的.第二个JSTLTest为文件名.需要加后缀。</p></div></div></div>
-
-
-  <div class="note p-4 mb-4 rounded-small danger">
-    <p>注意: <strong>WEB-INF文件下的jsp文件是不能直接访问到的.因此要把jsp文件挪到WebContent文件下。</strong></p>
-
-  </div>
-
-<a class="button  regular" href='https://blog.csdn.net/qq_36296239/article/details/78627140' title='返回csdn原文'><i class='fa-solid fa-play-circle'></i> 返回csdn原文</a>
-]]></content>
-      <categories>
-        <category>Server</category>
-      </categories>
-      <tags>
-        <tag>Tomcat</tag>
       </tags>
   </entry>
   <entry>
@@ -477,6 +477,33 @@
       </tags>
   </entry>
   <entry>
+    <title>spring-boot-maven-plugin的踩坑</title>
+    <url>/2024/11/20/spring-boot-maven-plugin%E7%9A%84%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我的base-server模块 和 base-api模块 都是隶属于BaseLearn的两个模块其中server在依赖中引用了base-api模块且在代码中使用了base-api中的某些类 但是现在打包server的时候 找不到引用的类 说程序包com.cheems.baseapi.xxxx不存在 但是在idea中ctrl+左键是可以索引到具体的类的，路径没问题 无数次清理maven重新倒入依赖和清理idea缓存都尝试了 也尝试先将api 进行install 然后再打包server也不行。</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>尝试先构建api模块</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install -pl base-api</span><br></pre></td></tr></table></figure></div>
+
+<p>再构建server</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install -pl base-server</span><br></pre></td></tr></table></figure></div>
+
+<p>依旧报错：程序包不存在一样的错误。</p>
+<p>检查BaseLearn父模块将api拉到server之前：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>base-api<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>base-server<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>然后</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install</span><br></pre></td></tr></table></figure></div>
+
+<p>重新 <code>install</code> api模块 然后 <code>package</code> server模块</p>
+<p>依旧同样的错误。</p>
+<h2 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h2><p>我直接大手一挥直接把api 中的<code>&lt;dependency&gt;&lt;/dependency&gt;</code> 全部注释掉，然后reload，只留下必要的让api模块install成功的依赖<br>发现还是报错。</p>
+<p>于是我注意到了在api模块中：</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- spring-boot-maven-plugin 会改变默认maven的打包逻辑使得api（当前）模块打包好后 引用api模块的其他模块不能正常打包 报错找不到api中的类--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>经过仔细查找资料发现，spring-boot-maven-plugin 会更改maven的默认打包逻辑，导致包无法被别的模块引用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不知道干嘛的插件不要乱装。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>redis的java客户端</title>
     <url>/2022/11/01/redis%E7%9A%84java%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
     <content><![CDATA[<h3 id="配合官方文档食用更佳"><a href="#配合官方文档食用更佳" class="headerlink" title="配合官方文档食用更佳"></a>配合官方文档食用更佳</h3><ul>
@@ -521,48 +548,6 @@
     <title>sticky on top</title>
     <url>/2023/04/07/sticky-on-top/</url>
     <content><![CDATA[<p>置顶文章来了我的老babe们。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>windows下多版本jdk管理踩坑</title>
-    <url>/2024/11/17/windows%E4%B8%8B%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E7%AE%A1%E7%90%86%E8%B8%A9%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近需要搞一个在Windows下多版本的java 环境（别问问就是垃圾公司用的win）</p>
-<p>自己有个项目需要打包用的jdk11</p>
-<p>打包时候报错 无法识别的版本:11</p>
-<p>现在想从1.8 切换到 11（下载好了）</p>
-<p>求助了GPT 检查配置并重启也无果</p>
-<p>最后尝试更改path环境变量优先级成功</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置:"></a>配置:</h2><ol>
-<li>java版本及配置：</li>
-</ol>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">where</span> java</span><br><span class="line"></span><br><span class="line">C:\Program File\Java\jdk1.8xxxxxx\bin\java.exe</span><br><span class="line">C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>其中 JAVA11_HOME 和 JAVA8_HOME 分别是两个系统变量。<br>再创建一个新的 JAVA_HOME : <code>%JAVA11_HOME%</code> 或者 <code>%JAVA8_HOME%</code>来引用当前是哪个环境。</p>
-<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>win + r -&gt; 输入regedit</p>
-<p>找到：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Java Soft\Java Development Kit</span><br></pre></td></tr></table></figure></div>
-
-<p>发现 Current Version的值依旧是1.8</p>
-<p>进一步验证了刚才就是环境变量没有生效</p>
-<ol start="4">
-<li>问题线索：</li>
-</ol>
-<p>我发现在bash终端临时设置JAVA_HOME变量是可以的：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br><span class="line"><span class="built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%</span><br><span class="line"><span class="built_in">echo</span> %JAVA_HOME%</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
-
-<p>这就说明是环境变量没有生效。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>尝试重启无效那说明就是加载环境变量的时候有问题<br>在配置环境的时候会在 path 中配置：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>尝试把 path 调整到前面确保优先级高于其他条目。</li>
-</ul>
-<p>于是我尝试放在了 xxx&#x2F;system32后面（尽量不要影响系统环境变量的加载）。</p>
-<p>重新打开cmd or bash终端</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
-
-<p>成功切换到11</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的问题提醒我，在配置多版本JDK时，不仅要确保<code>JAVA_HOME</code>等环境变量设置正确，还要关注<code>PATH</code>环境变量的优先级问题。通过这次的经历(cai keng)，我对环境变量的配置和管理有了更深的理解(tu cao).</p>
 ]]></content>
   </entry>
   <entry>
@@ -639,30 +624,53 @@
       </tags>
   </entry>
   <entry>
-    <title>spring-boot-maven-plugin的踩坑</title>
-    <url>/2024/11/20/spring-boot-maven-plugin%E7%9A%84%E8%B8%A9%E5%9D%91/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我的base-server模块 和 base-api模块 都是隶属于BaseLearn的两个模块其中server在依赖中引用了base-api模块且在代码中使用了base-api中的某些类 但是现在打包server的时候 找不到引用的类 说程序包com.cheems.baseapi.xxxx不存在 但是在idea中ctrl+左键是可以索引到具体的类的，路径没问题 无数次清理maven重新倒入依赖和清理idea缓存都尝试了 也尝试先将api 进行install 然后再打包server也不行。</p>
-<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>尝试先构建api模块</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install -pl base-api</span><br></pre></td></tr></table></figure></div>
+    <title>滴滴后端海外交易面经</title>
+    <url>/2025/10/19/%E6%BB%B4%E6%BB%B4%E5%90%8E%E7%AB%AF%E6%B5%B7%E5%A4%96%E4%BA%A4%E6%98%93%E9%9D%A2%E7%BB%8F/</url>
+    <content><![CDATA[<h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><p>0.介绍自己<br>1.hashmap 和 table 的区别<br>2.hashmap 的扩容机制<br>3.hashmap 使用的头插法还是尾插法<br>4.jvm的内存结构<br>5.jvm哪些地方会产生oom 哪些不会 为什么<br>6.大文件写入会导致大些oom<br>7.gc的可达性分析是如何实现的<br>8.java 的 synchronized 关键字如何实现的<br>9.wait 和 sleep 的本质区别<br>10.thread.sleep 和 lock.sportpart (音译) 方式区别。 （这个不会）<br>11.valitaile 关键字<br>12.被 valitaile 修饰的内存分配在哪里?<br>13.java线程和go的线程有什么区别？<br>14.mysql常见引擎有哪些 区别是什么？<br>15.事务的隔离级别？<br>16.b和b+树的区别<br>17.索引失效的情况<br>18.数据库中int类型的列 sql &#x3D; ‘123’ 是否能查出数据？<br>19.mvcc是啥<br>20.innoDB 下有哪些log ？<br>21.算法 lc 215 hardestK</p>
+<h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><p>介绍<br>基本是开放式问题<br>遇到的最大的技术挑战是什么？<br>大流量的话 几万的qps 需要有什么方案应对？<br>mq如何保证消息的可靠传递？<br>实际业务场景是怎么落地的，给出方案<br>如果mq消息consumer端执行失败？<br>lc448<br>长度为n的数组 每个元素代表一个木头长度 可以任意截断 截取k个长度为m的木块 输出最多可以截取的最大值<br>（标准输入输出 第一行n，k  第二行数组序列）</p>
+<h2 id="三面主管"><a href="#三面主管" class="headerlink" title="三面主管"></a>三面主管</h2><p>介绍<br>对于AI有什么看法<br>有什么？<br>做了哪些关于agent的学习？<br>mcp是什么？<br>算法lc560<br>问一下看机会原因？<br>期望薪资？<br>反问环节问到候选人情况<br>0-3y需要能卷能沉淀 锚定某一个业务 5-8y需要有技术深度和领导力 8y+需要有终局思维 就是看得清楚业务的终极形态是什么 此刻公司在什么样的阶段等</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>windows下多版本jdk管理踩坑</title>
+    <url>/2024/11/17/windows%E4%B8%8B%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E7%AE%A1%E7%90%86%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近需要搞一个在Windows下多版本的java 环境（别问问就是垃圾公司用的win）</p>
+<p>自己有个项目需要打包用的jdk11</p>
+<p>打包时候报错 无法识别的版本:11</p>
+<p>现在想从1.8 切换到 11（下载好了）</p>
+<p>求助了GPT 检查配置并重启也无果</p>
+<p>最后尝试更改path环境变量优先级成功</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置:"></a>配置:</h2><ol>
+<li>java版本及配置：</li>
+</ol>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">where</span> java</span><br><span class="line"></span><br><span class="line">C:\Program File\Java\jdk1.8xxxxxx\bin\java.exe</span><br><span class="line">C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br></pre></td></tr></table></figure></div>
 
-<p>再构建server</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install -pl base-server</span><br></pre></td></tr></table></figure></div>
+<p>其中 JAVA11_HOME 和 JAVA8_HOME 分别是两个系统变量。<br>再创建一个新的 JAVA_HOME : <code>%JAVA11_HOME%</code> 或者 <code>%JAVA8_HOME%</code>来引用当前是哪个环境。</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>win + r -&gt; 输入regedit</p>
+<p>找到：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Java Soft\Java Development Kit</span><br></pre></td></tr></table></figure></div>
 
-<p>依旧报错：程序包不存在一样的错误。</p>
-<p>检查BaseLearn父模块将api拉到server之前：</p>
-<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>base-api<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>base-server<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>发现 Current Version的值依旧是1.8</p>
+<p>进一步验证了刚才就是环境变量没有生效</p>
+<ol start="4">
+<li>问题线索：</li>
+</ol>
+<p>我发现在bash终端临时设置JAVA_HOME变量是可以的：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br><span class="line"><span class="built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%</span><br><span class="line"><span class="built_in">echo</span> %JAVA_HOME%</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
 
-<p>然后</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install</span><br></pre></td></tr></table></figure></div>
+<p>这就说明是环境变量没有生效。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>尝试重启无效那说明就是加载环境变量的时候有问题<br>在配置环境的时候会在 path 中配置：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure></div>
 
-<p>重新 <code>install</code> api模块 然后 <code>package</code> server模块</p>
-<p>依旧同样的错误。</p>
-<h2 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h2><p>我直接大手一挥直接把api 中的<code>&lt;dependency&gt;&lt;/dependency&gt;</code> 全部注释掉，然后reload，只留下必要的让api模块install成功的依赖<br>发现还是报错。</p>
-<p>于是我注意到了在api模块中：</p>
-<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- spring-boot-maven-plugin 会改变默认maven的打包逻辑使得api（当前）模块打包好后 引用api模块的其他模块不能正常打包 报错找不到api中的类--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>尝试把 path 调整到前面确保优先级高于其他条目。</li>
+</ul>
+<p>于是我尝试放在了 xxx&#x2F;system32后面（尽量不要影响系统环境变量的加载）。</p>
+<p>重新打开cmd or bash终端</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
 
-<p>经过仔细查找资料发现，spring-boot-maven-plugin 会更改maven的默认打包逻辑，导致包无法被别的模块引用。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不知道干嘛的插件不要乱装。</p>
+<p>成功切换到11</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的问题提醒我，在配置多版本JDK时，不仅要确保<code>JAVA_HOME</code>等环境变量设置正确，还要关注<code>PATH</code>环境变量的优先级问题。通过这次的经历(cai keng)，我对环境变量的配置和管理有了更深的理解(tu cao).</p>
 ]]></content>
   </entry>
 </search>
