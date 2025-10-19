@@ -25,6 +25,56 @@
       </tags>
   </entry>
   <entry>
+    <title>关于ElasticSearch的运行Bug</title>
+    <url>/2022/11/29/ElasticSearch/</url>
+    <content><![CDATA[<p>info:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
+<span id="more"></span>
+<p> <code>原因:</code></p>
+<ul>
+<li>文件描述符fd太少:</li>
+</ul>
+<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
+<p><em>(adam是本地用户,替换你自己的)</em></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
+
+<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
+
+<p>找到文件中的如下内容:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
+
+<p>修改为:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
+
+<p>并执行:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
+
+<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
+<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
+<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
+<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
+<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
+<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
+<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
+]]></content>
+      <categories>
+        <category>ElasticSearch</category>
+      </categories>
+      <tags>
+        <tag>ElasticSearch</tag>
+        <tag>ES</tag>
+        <tag>bug</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Github设置ssh免密登陆并配置hexo</title>
     <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
     <content><![CDATA[
@@ -88,56 +138,6 @@
         <tag>hexo</tag>
         <tag>github</tag>
         <tag>ssh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于ElasticSearch的运行Bug</title>
-    <url>/2022/11/29/ElasticSearch/</url>
-    <content><![CDATA[<p>info:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
-<span id="more"></span>
-<p> <code>原因:</code></p>
-<ul>
-<li>文件描述符fd太少:</li>
-</ul>
-<div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">Frist Step</a></li><li class="tab"><a class="#first-unique-name-2">Second Step</a></li><li class="tab"><a class="#first-unique-name-3">Third Step</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p>切换到root用户 查看硬限制</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -Hn  </span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.conf </span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p>在limits配置文件中添加下面设置:</p>
-<p><em>(adam是本地用户,替换你自己的)</em></p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">adam soft nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard nofile 65536</span><br><span class="line"></span><br><span class="line">adam hard <span class="built_in">nproc</span> 4096</span><br><span class="line"></span><br><span class="line">adam soft <span class="built_in">nproc</span> 4096</span><br></pre></td></tr></table></figure></div>
-
-<p>退出用户重新登录，使配置生效</p></div><div class="tab-pane" id="first-unique-name-3"><p>重新 ulimit -Hn  查看硬限制 会发现数值有4096改成65535</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/security/limits.d/90-nproc.conf </span><br></pre></td></tr></table></figure></div>
-
-<p>找到文件中的如下内容:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 1024</span><br></pre></td></tr></table></figure></div>
-
-<p>修改为:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">soft nproc 2048</span><br></pre></td></tr></table></figure></div>
-
-<p>接下来在&#x2F;etc&#x2F;sysctl.conf添加:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure></div>
-
-<p>并执行:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></div></div></div></div>
-
-<p><a class="link"   href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/" >参考文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 中是这么写的:</p>
-<p>Elasticsearch uses a number of thread pools for different types of operations. It is important that it is able to create new threads whenever needed. Make sure that the number of threads that the Elasticsearch user can create is at least 4096.</p>
-<p>意思就是说，ES是多线程处理任务的，为了确保ES可以正常运行，使用ES的用户可创建的线程数至少为4096</p>
-<p>This can be done by setting <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#ulimit"><code>ulimit -u 4096</code></a> as root before starting Elasticsearch, or by setting <code>nproc</code> to <code>4096</code> in <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/setting-system-settings.html#limits.conf"><code>/etc/security/limits.conf</code></a>.</p>
-<p>可以在root用户下使用 <code>ulimit -u 4096</code> 这个设置来配置生效。</p>
-<p>The package distributions when run as services under <code>systemd</code> will configure the number of threads for the Elasticsearch process automatically. No additional configuration is required.</p>
-<p>如果使用<code>systemd</code>作为系统服务来启动ES则无须额外配置。</p>
-]]></content>
-      <categories>
-        <category>ElasticSearch</category>
-      </categories>
-      <tags>
-        <tag>ElasticSearch</tag>
-        <tag>ES</tag>
-        <tag>bug</tag>
-        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -292,78 +292,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Suit 80 Owlab</title>
-    <url>/2023/05/02/Suit%2080%20Owlab/</url>
-    <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
-<li>Owlab旗舰店：<ul>
-<li>suit80pcb（带夹心棉、轴下垫）</li>
-<li><del>suit80子板（可不要）</del></li>
-<li>消音包（底棉）</li>
-</ul>
-</li>
-<li>HYPERBORING：<ul>
-<li>tiger 80 lite定位板</li>
-<li>tiger 80子板</li>
-</ul>
-</li>
-<li>KBDfans<ul>
-<li>tiger 80 lite外壳</li>
-<li>gasket硅胶粒</li>
-</ul>
-</li>
-<li>MONE客制化<ul>
-<li>MONE v2 卫星轴</li>
-</ul>
-</li>
-<li>昆仑白色特种润滑脂2号</li>
-<li>轴体、type-c口的连接线</li>
-</ul>
-<h3 id="⌨️-组装："><a href="#⌨️-组装：" class="headerlink" title="⌨️ 组装："></a>⌨️ 组装：</h3><ol>
-<li><p>先润卫星轴，十字菊花的底座两侧薄润，钢丝的拐角处根据自己需求厚润，钢丝短边尽头厚润 （不需要太规整，从后面插入轴座会摊平）。</p>
-</li>
-<li><p>大键位贴上特氟龙胶带，放上轴下垫，安装卫星轴。</p>
-
-  <div class="note p-4 mb-4 rounded-small warning">
-    <p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路。</p>
-
-  </div>
-</li>
-<li><p>依次铺上夹心棉、定位板，注意80 lite定位板卫星轴处开孔很紧，慢慢扣下去。</p>
-</li>
-<li><p>上轴体，选自己喜欢的。</p>
-
-  <div class="note p-4 mb-4 rounded-small warning">
-    <p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
-
-  </div>
-</li>
-<li><p>在定位板上下两边突出的“胳膊”上装硅胶粒，每个胳膊两端都要装。</p>
-</li>
-<li><p>子板装底壳，并上好螺丝，装到pcb（注意子板安装线材顺序，有防呆口一般不会错，但防呆不防傻 -_-）</p>
-</li>
-<li><p>扣上外壳。</p>
-
-  <div class="note p-4 mb-4 rounded-small warning">
-    <p>扣之前记得把上壳两侧突出的加强筋剪掉，不然会卡定为板盖不严（👉这样的手指形状）</p>
-
-  </div>
-</li>
-<li><p>上外壳螺丝（包装里细黑的最长的那个） 。</p>
-</li>
-<li><p>连线测试。</p>
-</li>
-</ol>
-<h3 id="🎤打字音视频："><a href="#🎤打字音视频：" class="headerlink" title="🎤打字音视频："></a>🎤打字音视频：</h3><p>先欠着。挺好听的 性价比很高的麻将。</p>
-]]></content>
-      <categories>
-        <category>I/O equipment</category>
-      </categories>
-      <tags>
-        <tag>mechanical keyboard</tag>
-        <tag>customize</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Tomcat Server</title>
     <url>/2017/11/01/Tomcat-Server/</url>
     <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
@@ -458,6 +386,78 @@
       <tags>
         <tag>golang</tag>
         <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Suit 80 Owlab</title>
+    <url>/2023/05/02/Suit%2080%20Owlab/</url>
+    <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
+<li>Owlab旗舰店：<ul>
+<li>suit80pcb（带夹心棉、轴下垫）</li>
+<li><del>suit80子板（可不要）</del></li>
+<li>消音包（底棉）</li>
+</ul>
+</li>
+<li>HYPERBORING：<ul>
+<li>tiger 80 lite定位板</li>
+<li>tiger 80子板</li>
+</ul>
+</li>
+<li>KBDfans<ul>
+<li>tiger 80 lite外壳</li>
+<li>gasket硅胶粒</li>
+</ul>
+</li>
+<li>MONE客制化<ul>
+<li>MONE v2 卫星轴</li>
+</ul>
+</li>
+<li>昆仑白色特种润滑脂2号</li>
+<li>轴体、type-c口的连接线</li>
+</ul>
+<h3 id="⌨️-组装："><a href="#⌨️-组装：" class="headerlink" title="⌨️ 组装："></a>⌨️ 组装：</h3><ol>
+<li><p>先润卫星轴，十字菊花的底座两侧薄润，钢丝的拐角处根据自己需求厚润，钢丝短边尽头厚润 （不需要太规整，从后面插入轴座会摊平）。</p>
+</li>
+<li><p>大键位贴上特氟龙胶带，放上轴下垫，安装卫星轴。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>要带着垫子拧卫星轴螺丝，防止pcb因为金属螺丝段路。</p>
+
+  </div>
+</li>
+<li><p>依次铺上夹心棉、定位板，注意80 lite定位板卫星轴处开孔很紧，慢慢扣下去。</p>
+</li>
+<li><p>上轴体，选自己喜欢的。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>如果TTC之类的只有俩金属针脚，可以先让有针脚的一边稍微倾斜先进去然后扣紧即可。</p>
+
+  </div>
+</li>
+<li><p>在定位板上下两边突出的“胳膊”上装硅胶粒，每个胳膊两端都要装。</p>
+</li>
+<li><p>子板装底壳，并上好螺丝，装到pcb（注意子板安装线材顺序，有防呆口一般不会错，但防呆不防傻 -_-）</p>
+</li>
+<li><p>扣上外壳。</p>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>扣之前记得把上壳两侧突出的加强筋剪掉，不然会卡定为板盖不严（👉这样的手指形状）</p>
+
+  </div>
+</li>
+<li><p>上外壳螺丝（包装里细黑的最长的那个） 。</p>
+</li>
+<li><p>连线测试。</p>
+</li>
+</ol>
+<h3 id="🎤打字音视频："><a href="#🎤打字音视频：" class="headerlink" title="🎤打字音视频："></a>🎤打字音视频：</h3><p>先欠着。挺好听的 性价比很高的麻将。</p>
+]]></content>
+      <categories>
+        <category>I/O equipment</category>
+      </categories>
+      <tags>
+        <tag>mechanical keyboard</tag>
+        <tag>customize</tag>
       </tags>
   </entry>
   <entry>
