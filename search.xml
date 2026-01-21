@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>ES+Kibana整合bug</title>
-    <url>/2023/07/29/ES-Kibana%E6%95%B4%E5%90%88/</url>
+    <url>/2025/01/10/ES-Kibana%E6%95%B4%E5%90%88/</url>
     <content><![CDATA[<p>console info:</p>
 <div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
 
@@ -26,7 +26,7 @@
   </entry>
   <entry>
     <title>关于ElasticSearch的运行Bug</title>
-    <url>/2022/11/29/ElasticSearch/</url>
+    <url>/2025/01/26/ElasticSearch/</url>
     <content><![CDATA[<p>info:</p>
 <div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="code"><pre><span class="line">[1].max file descriptors [4096] for elasticsearch </span><br><span class="line">    process is too low, increase to at least [65536]</span><br><span class="line">[2].max number of threads [1889] for user</span><br><span class="line">    [adam] is too low, increase to at least [4096]</span><br><span class="line">[3].max virtual memory areas vm.max_map_count [4096]</span><br><span class="line">    is too low, increase to at least [65536]</span><br></pre></td></tr></table></figure></div>
 <span id="more"></span>
@@ -76,7 +76,7 @@
   </entry>
   <entry>
     <title>Github设置ssh免密登陆并配置hexo</title>
-    <url>/2022/04/07/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
+    <url>/2025/02/25/Github%E8%AE%BE%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86%E5%B9%B6%E9%85%8D%E7%BD%AEhexo/</url>
     <content><![CDATA[
   <div class="note-large blue">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
@@ -142,7 +142,7 @@
   </entry>
   <entry>
     <title>lambda 表达式合集</title>
-    <url>/2022/04/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
+    <url>/2025/03/07/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<p>来自java8的“新”特性…</p>
 <span id="more"></span>
 <h1 id="lambda-in-java"><a href="#lambda-in-java" class="headerlink" title="lambda in java"></a>lambda in java</h1><h2 id="1-1-常见操作"><a href="#1-1-常见操作" class="headerlink" title="1.1 常见操作"></a>1.1 常见操作</h2><h3 id="1-1-1-创建流"><a href="#1-1-1-创建流" class="headerlink" title="1.1.1 创建流"></a>1.1.1 创建流</h3><p>单列集合 :  集合对象.stream();</p>
@@ -165,7 +165,7 @@
   </entry>
   <entry>
     <title>My Elasticsearch User Guide</title>
-    <url>/2023/07/29/My-Elasticsearch-User-Guide/</url>
+    <url>/2025/03/30/My-Elasticsearch-User-Guide/</url>
     <content><![CDATA[<ol>
 <li>商品搜索专题</li>
 </ol>
@@ -181,8 +181,8 @@
 <p>4）全文检索流程<br>    一、创建索引<br>        1.采集数据<br>            各种来源的数据。(磁盘 网站 文本 图片url etc…)<br>        2.分析数据<br>            关键词拆分<br>            去标点<br>            去除停用词<br>            转化大小写<br>            得到单词列表<br>        3.创建文档对象<br>            把原始文档进行封装 Document对象（相当于一个数据库）<br>            field：一个document可以有多个field 文件名 文件 等信息，并不是所有的field都需要分析 比如文件路径。<br>            然后关键词拆分，取出标点符号去除重复词 转换大小写 最终得到一个单词列表<br>            每个关键词都是一个term<br>        4.创建索引库<br>            基于关键词（term）创建索引<br>            封装Document对象<br>            索引库存放的是关键词和Document的关系<br>    二、查询索引大致流程<br>        1.用户接口<br>            用户输入查询内容。<br>            输入可以是一个关键词，也可以是一句话。<br>        2.封装查询条件<br>            需要把用户内容进行分词处理。<br>            需要指定要查询的field<br>            查询条件：<br>                field ：value<br>            遵循以上格式<br>        3.执行查询<br>            在索引中根据查询条件查询对应字段，找到对应关键词。<br>            关键词存在就查询到结果，不存在就没结果。<br>            根据关键词找到文档id，根据文档id找到document对象<br>            <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/source/imgs/es%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E6%B5%81%E7%A8%8B.png"
-                      alt="ES全文检索流程"
+                     data-src="/2025/03/30/My-Elasticsearch-User-Guide/es%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E6%B5%81%E7%A8%8B.png"
+                      class="" title="ES全文检索流程"
                 ><br>        4.结果中关键词部分高亮显示，分页处理，根据相关度进行排序</p>
 <p>2.ES部分</p>
 <p>1）对应关系：</p>
@@ -231,7 +231,7 @@
   </entry>
   <entry>
     <title>Route Bug</title>
-    <url>/2017/11/23/Route-Bug/</url>
+    <url>/2025/04/15/Route-Bug/</url>
     <content><![CDATA[<p>跟上篇文章一样也是很多java web新手都遇到的错误:<br><code>jsp跳转到Servlet 出现404路径错误:</code></p>
 <!-- 
   <div class="note p-4 mb-4 rounded-small bug description :">
@@ -285,7 +285,7 @@
   </entry>
   <entry>
     <title>Spring基础一篇就够了</title>
-    <url>/2023/08/06/Spring%E5%9F%BA%E7%A1%80%E4%B8%80%E7%AF%87%E5%B0%B1%E5%A4%9F%E4%BA%86/</url>
+    <url>/2025/05/07/Spring%E5%9F%BA%E7%A1%80%E4%B8%80%E7%AF%87%E5%B0%B1%E5%A4%9F%E4%BA%86/</url>
     <content><![CDATA[<p>目标：<br>理解IoC （inverse of control）&#x2F;DI （dependency injection）<br>理解 AOP（面向切面编程）</p>
 <p>Spring是什么？（不是重点一笔带过）<br>是软件层面的框架，无特定场景，是一个管理者形象，企业级开发框架，让企业级应用更快开发，优势就是让企业级项目可以做分层架构，开发者可以选择组件模块化开发。<br>目前已经有各个不同层的解决方案，比如：<br>MVC：有strust2 SpringMVC<br>ORMapping：Hibernate Mybatis Spring Data<br>微服务分布式架构：Spring Cloud<br>它的两大核心就是 IoC &#x2F; AOP</p>
 <p>企业级项目一般： 用户量大 并发量高 功能模块多又复杂；性能、安全性要求高；需求变化快，业务又复杂。</p>
@@ -293,7 +293,7 @@
   </entry>
   <entry>
     <title>Tomcat Server</title>
-    <url>/2017/11/01/Tomcat-Server/</url>
+    <url>/2025/06/10/Tomcat-Server/</url>
     <content><![CDATA[<p>很多java web新手都遇到的错误:</p>
 <p>tomcat报错:</p>
 
@@ -330,7 +330,7 @@
   </entry>
   <entry>
     <title>Golang 汇总</title>
-    <url>/2022/04/15/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/</url>
+    <url>/2025/06/26/go%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<p>Desc: 所有的关于go的学习问题记录都在这个文章</p>
 <span id="more"></span>
 <h1 id="安装部分"><a href="#安装部分" class="headerlink" title="安装部分"></a>安装部分</h1><h3 id="问题一-安装后command-not-found"><a href="#问题一-安装后command-not-found" class="headerlink" title="问题一: 安装后command not found"></a>问题一: 安装后command not found</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh-3.2<span class="comment"># go -version </span></span><br><span class="line">sh: go: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure></div>
@@ -390,7 +390,7 @@
   </entry>
   <entry>
     <title>Suit 80 Owlab</title>
-    <url>/2023/05/02/Suit%2080%20Owlab/</url>
+    <url>/2025/05/15/Suit%2080%20Owlab/</url>
     <content><![CDATA[<h3 id="🛒-购物清单："><a href="#🛒-购物清单：" class="headerlink" title="🛒 购物清单："></a>🛒 购物清单：</h3><ul>
 <li>Owlab旗舰店：<ul>
 <li>suit80pcb（带夹心棉、轴下垫）</li>
@@ -462,8 +462,8 @@
   </entry>
   <entry>
     <title>nginxConfInDocker</title>
-    <url>/2022/06/14/nginxConfInDocker/</url>
-    <content><![CDATA[<p>一些配置的备份罢了</p>
+    <url>/2025/07/18/nginxConfInDocker/</url>
+    <content><![CDATA[<p>一些配置的备份</p>
 <span id="more"></span>
 
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 80:80 --name nginx \ </span><br><span class="line">-v /mydata/nginx/html:/usr/share/nginx/html \</span><br><span class="line">-v /mydata/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /mydata/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /mydata/nginx/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure></div>
@@ -478,7 +478,7 @@
   </entry>
   <entry>
     <title>redis的java客户端</title>
-    <url>/2022/11/01/redis%E7%9A%84java%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
+    <url>/2025/08/16/redis%E7%9A%84java%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
     <content><![CDATA[<h3 id="配合官方文档食用更佳"><a href="#配合官方文档食用更佳" class="headerlink" title="配合官方文档食用更佳"></a>配合官方文档食用更佳</h3><ul>
 <li>rediesson（<a class="link"   href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95" >官方文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ）<span id="more"></span></li>
 </ul>
@@ -501,13 +501,12 @@
 <li><p>缓存击穿（单个热点key过期时间到）</p>
 <p>（1）热点数据永不失效</p>
 <p>（2）互斥锁</p>
-<p><img  
+<img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/imgs/redis_distribute.svg"
-                      alt="redis案例"
-                ></p>
-</li>
+                     data-src="/2025/08/16/redis%E7%9A%84java%E5%AE%A2%E6%88%B7%E7%AB%AF/redis_distribute.svg"
+                      class="" title="redis案例"
+                ></li>
 </ul>
 ]]></content>
       <categories>
@@ -519,7 +518,7 @@
   </entry>
   <entry>
     <title>spring-boot-maven-plugin的踩坑</title>
-    <url>/2024/11/20/spring-boot-maven-plugin%E7%9A%84%E8%B8%A9%E5%9D%91/</url>
+    <url>/2025/09/07/spring-boot-maven-plugin%E7%9A%84%E8%B8%A9%E5%9D%91/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我的base-server模块 和 base-api模块 都是隶属于BaseLearn的两个模块其中server在依赖中引用了base-api模块且在代码中使用了base-api中的某些类 但是现在打包server的时候 找不到引用的类 说程序包com.cheems.baseapi.xxxx不存在 但是在idea中ctrl+左键是可以索引到具体的类的，路径没问题 无数次清理maven重新倒入依赖和清理idea缓存都尝试了 也尝试先将api 进行install 然后再打包server也不行。</p>
 <h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>尝试先构建api模块</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mvn clean install -pl base-api</span><br></pre></td></tr></table></figure></div>
@@ -546,13 +545,13 @@
   </entry>
   <entry>
     <title>sticky on top</title>
-    <url>/2023/04/07/sticky-on-top/</url>
-    <content><![CDATA[<p>置顶文章来了我的老babe们。</p>
+    <url>/2025/09/19/sticky-on-top/</url>
+    <content><![CDATA[<p>置顶文章。</p>
 ]]></content>
   </entry>
   <entry>
     <title>windows下多版本jdk管理踩坑</title>
-    <url>/2024/11/17/windows%E4%B8%8B%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E7%AE%A1%E7%90%86%E8%B8%A9%E5%9D%91/</url>
+    <url>/2025/10/15/windows%E4%B8%8B%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E7%AE%A1%E7%90%86%E8%B8%A9%E5%9D%91/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近需要搞一个在Windows下多版本的java 环境（别问问就是垃圾公司用的win）</p>
 <p>自己有个项目需要打包用的jdk11</p>
 <p>打包时候报错 无法识别的版本:11</p>
@@ -594,7 +593,7 @@
   </entry>
   <entry>
     <title>xTransfer三面凉经</title>
-    <url>/2025/10/19/xTransfer%E4%B8%89%E9%9D%A2%E5%87%89%E7%BB%8F/</url>
+    <url>/2025/10/25/xTransfer%E4%B8%89%E9%9D%A2%E5%87%89%E7%BB%8F/</url>
     <content><![CDATA[<h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><ol>
 <li><p>自我介绍</p>
 </li>
@@ -652,7 +651,7 @@
   </entry>
   <entry>
     <title>服务推荐</title>
-    <url>/2022/04/08/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3%E7%9A%84idea%E8%AE%B0%E5%BD%95/</url>
+    <url>/2025/11/06/%E5%85%B3%E4%BA%8E%E6%9C%8D%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%9B%B8%E5%85%B3%E7%9A%84idea%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>没x用的学术垃圾产出</p>
 <span id="more"></span>
 
@@ -689,7 +688,7 @@
   </entry>
   <entry>
     <title>滴滴后端海外交易面经</title>
-    <url>/2025/10/19/%E6%BB%B4%E6%BB%B4%E5%90%8E%E7%AB%AF%E6%B5%B7%E5%A4%96%E4%BA%A4%E6%98%93%E9%9D%A2%E7%BB%8F/</url>
+    <url>/2025/12/07/%E6%BB%B4%E6%BB%B4%E5%90%8E%E7%AB%AF%E6%B5%B7%E5%A4%96%E4%BA%A4%E6%98%93%E9%9D%A2%E7%BB%8F/</url>
     <content><![CDATA[<h2 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h2><p>0.介绍自己<br>1.hashmap 和 table 的区别<br>2.hashmap 的扩容机制<br>3.hashmap 使用的头插法还是尾插法<br>4.jvm的内存结构<br>5.jvm哪些地方会产生oom 哪些不会 为什么<br>6.大文件写入会导致大些oom<br>7.gc的可达性分析是如何实现的<br>8.java 的 synchronized 关键字如何实现的<br>9.wait 和 sleep 的本质区别<br>10.thread.sleep 和 lock.sportpart (音译) 方式区别。 （这个不会）<br>11.valitaile 关键字<br>12.被 valitaile 修饰的内存分配在哪里?<br>13.java线程和go的线程有什么区别？<br>14.mysql常见引擎有哪些 区别是什么？<br>15.事务的隔离级别？<br>16.b和b+树的区别<br>17.索引失效的情况<br>18.数据库中int类型的列 sql &#x3D; ‘123’ 是否能查出数据？<br>19.mvcc是啥<br>20.innoDB 下有哪些log ？<br>21.算法 lc 215 hardestK</p>
 <h2 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h2><p>介绍<br>基本是开放式问题<br>遇到的最大的技术挑战是什么？<br>大流量的话 几万的qps 需要有什么方案应对？<br>mq如何保证消息的可靠传递？<br>实际业务场景是怎么落地的，给出方案<br>如果mq消息consumer端执行失败？<br>lc448<br>长度为n的数组 每个元素代表一个木头长度 可以任意截断 截取k个长度为m的木块 输出最多可以截取的最大值<br>（标准输入输出 第一行n，k  第二行数组序列）</p>
 <h2 id="三面主管"><a href="#三面主管" class="headerlink" title="三面主管"></a>三面主管</h2><p>介绍<br>对于AI有什么看法<br>有什么？<br>做了哪些关于agent的学习？<br>mcp是什么？<br>算法lc560<br>问一下看机会原因？<br>期望薪资？<br>反问环节问到候选人情况<br>0-3y需要能卷能沉淀 锚定某一个业务 5-8y需要有技术深度和领导力 8y+需要有终局思维 就是看得清楚业务的终极形态是什么 此刻公司在什么样的阶段等</p>
@@ -697,7 +696,7 @@
   </entry>
   <entry>
     <title>遗传算法</title>
-    <url>/2022/06/08/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/</url>
+    <url>/2025/12/19/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p>paper上的算法…</p>
 <span id="more"></span>
 <h5 id="要素："><a href="#要素：" class="headerlink" title="要素："></a>要素：</h5><ol>
