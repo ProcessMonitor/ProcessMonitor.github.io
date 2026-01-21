@@ -705,12 +705,12 @@
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置:"></a>配置:</h2><ol>
 <li>java版本及配置：</li>
 </ol>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">where</span> java</span><br><span class="line"></span><br><span class="line">C:\Program File\Java\jdk1.8xxxxxx\bin\java.exe</span><br><span class="line">C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">where</span> java</span><br><span class="line"></span><br><span class="line">C:\Program File\Java\jdk1.8xxxxxx\bin\java.exe</span><br><span class="line">C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br></pre></td></tr></table></figure></div>
 
 <p>其中 JAVA11_HOME 和 JAVA8_HOME 分别是两个系统变量。<br>再创建一个新的 JAVA_HOME : <code>%JAVA11_HOME%</code> 或者 <code>%JAVA8_HOME%</code>来引用当前是哪个环境。</p>
 <h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>win + r -&gt; 输入regedit</p>
 <p>找到：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Java Soft\Java Development Kit</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Java Soft\Java Development Kit</span><br></pre></td></tr></table></figure></div>
 
 <p>发现 Current Version的值依旧是1.8</p>
 <p>进一步验证了刚才就是环境变量没有生效</p>
@@ -718,18 +718,18 @@
 <li>问题线索：</li>
 </ol>
 <p>我发现在bash终端临时设置JAVA_HOME变量是可以的：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br><span class="line"><span class="built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%</span><br><span class="line"><span class="built_in">echo</span> %JAVA_HOME%</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program File\Java\jdk11.0.23xxx\bin\java.exe</span><br><span class="line"><span class="built_in">set</span> PATH=%JAVA_HOME%\bin;%PATH%</span><br><span class="line"><span class="built_in">echo</span> %JAVA_HOME%</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
 
 <p>这就说明是环境变量没有生效。</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>尝试重启无效那说明就是加载环境变量的时候有问题<br>在配置环境的时候会在 path 中配置：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%JAVA_HOME%\bin</span><br></pre></td></tr></table></figure></div>
 
 <ul>
 <li>尝试把 path 调整到前面确保优先级高于其他条目。</li>
 </ul>
 <p>于是我尝试放在了 xxx&#x2F;system32后面（尽量不要影响系统环境变量的加载）。</p>
 <p>重新打开cmd or bash终端</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></div>
 
 <p>成功切换到11</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次的问题提醒我，在配置多版本JDK时，不仅要确保<code>JAVA_HOME</code>等环境变量设置正确，还要关注<code>PATH</code>环境变量的优先级问题。通过这次的经历(cai keng)，我对环境变量的配置和管理有了更深的理解(tu cao).</p>

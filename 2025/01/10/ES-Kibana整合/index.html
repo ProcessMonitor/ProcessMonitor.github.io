@@ -740,12 +740,12 @@
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<p>console info:</p>
-<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[error]...</span><br><span class="line">[version_conflict_engine_exception]:[task:endpoint:user-artifact-packager:1.0.0]:</span><br><span class="line">[task:Alerting-alerting_telemetry]and[task:apm-telemetry-task]</span><br><span class="line">both are:</span><br><span class="line">version conflict, document already exists (current version [xx])</span><br><span class="line">etc...</span><br></pre></td></tr></table></figure></div>
 
 <p>突然意识到Document 是ES中的索引库啊，那说明是索引库版本不一致咯前面的 task:apm-telementry 等等应该是索引库的名字 我给他删除了一下试了试，成功了。<br>但是如果是实际的开发工作中遇到这种情况，也不能删掉索引库的情况，该怎么办呢？</p>
 <p>所以我来看官网了。</p>
-<p><a class="link" target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control">如何处理版本冲突 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p><a class="link" target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control">乐观并发控制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/version-control.html#version-control">如何处理版本冲突<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/guide/2.x/optimistic-concurrency-control.html#optimistic-concurrency-control">乐观并发控制<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>也算是从这个一个小bug 里面学到了如何检索自己的问题 如何排检索优先级：</p>
 <p>官方文档 &gt;&gt; 该项目的Github issue &gt; 各开源论坛 </p>
 <p>今天先写到这 先不排版了。</p>
